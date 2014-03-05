@@ -1,0 +1,11 @@
+OneTechnologies.NuGetServer/*
+*/_instrumented/*
+*/_src/*
+*/node_modules/*
+*/specs/*
+*/coverage/*
+*/.idea/*
+/.idea/*
+*/**/*.log
+/*/Gruntfile.js
+/*/coverage.json
