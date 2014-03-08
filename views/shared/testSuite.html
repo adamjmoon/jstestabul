@@ -1,5 +1,5 @@
-<div id="view" class="well view" style="position: absolute; top: 11px; left:0px; right: 0px; bottom: 0px; height: 100%;"
-     data-bind="openMenu, localScroll: {target: '#view'}">
+<div id="view" class="well view" style="position: absolute; top: 0px; left:0px; right: 0px; bottom: 0px;"
+     data-bind="openMenu, localScroll: {target: '#wrapper'}">
     <div class="" style="position: fixed;bottom: 10px;right:20px;z-index: 1000; display: none;"
          data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
         <a class="btn btn-sm btn-primary" href=""
@@ -8,25 +8,26 @@
            data-bind="css: viewSrc() ? 'active' : '' , click: function(){ viewSpecs(false); viewSrc(true);}">SOURCE</a>
     </div>
 
-    <div id="mochaWrapper" class="mochaWrapper"
-         data-bind="visible: (viewSpecs() && unitTestFrameworkManager.getFramework()==='mocha')">
-        <div class="" style="position:absolute;left:80%;top: 5px;z-index: 1000;">
-            <a id="mochaSuiteExpander"
-               class="collapser corkClass"
-               data-bind="click: changeMochaSuitesState(), css: collapseMocha() ? 'expandAll' : 'collapseAll' ">
-                <img id="corkCollapse" class=""
-                     data-bind="attr:{'title': collapseMocha() ? 'Expand Suites' : 'Collapse Suites' }"
-                     src="/img/menulogo.png" class=""/>
-            </a>
+    <div id="wrapper" class="col-md-12">
+
+        <div id="mochaWrapper" class="mochaWrapper"
+             data-bind="visible: (viewSpecs() && unitTestFrameworkManager.getFramework()==='mocha')">
+            <div class="" style="position:absolute;left:80%;top: 5px;z-index: 1000;">
+                <a id="mochaSuiteExpander"
+                   class="collapser corkClass"
+                   data-bind="click: changeMochaSuitesState(), css: collapseMocha() ? 'expandAll' : 'collapseAll' ">
+                    <img id="corkCollapse" class=""
+                         data-bind="attr:{'title': collapseMocha() ? 'Expand Suites' : 'Collapse Suites' }"
+                         src="/img/menulogo.png" class=""/>
+                </a>
+            </div>
+            <div id="mocha" class="col-md-12"
+                 style="height:100%;overflow: auto !important;margin-top: 34px;"></div>
         </div>
-        <div id="mocha" class="col-md-12"
-             style="height:100%;overflow: auto !important;margin-top: 34px;"></div>
-    </div>
-    <div id="itchcorkWrapper" class="col-md-12"
-         data-bind="visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork'">
-        <div style="height: 45px;"></div>
+
         <div class="col-md-12" id="itchcork"
-             data-bind="'foreach': Object.keys(suites())"
+             data-bind="visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork','foreach': Object.keys(suites())"
+
              style="display: block !important;">
 
             <div class="well" style="clear: both;">
@@ -37,15 +38,15 @@
                         <a class=""
                            data-bind="attr: {'href': '#' + $data}, click: $parent.selectSuite($data)">
 
-                                                                            <span data-bind="text: $parent.suites()[$data].suiteDesc()"
-                                                                                  class="label label-info suiteLabel"
-                                                                                  style=""/>
-                                                                           <span class="badge badge-info count"
-                                                                                 data-bind="text: $parent.suites()[$data].tests().length"></span>
-                                                                                      <span class="badge badge-success count"
-                                                                                            data-bind="visible: $parent.suites()[$data].passedCount() > 0,text: $parent.suites()[$data].passedCount()"></span>
-                                                                                      <span class="badge badge-important count"
-                                                                                            data-bind="visible: $parent.suites()[$data].failedCount() > 0,text: $parent.suites()[$data].failedCount()"></span>
+                                                                                    <span data-bind="text: $parent.suites()[$data].suiteDesc()"
+                                                                                          class="label label-info suiteLabel"
+                                                                                          style=""/>
+                                                                                   <span class="badge badge-info count"
+                                                                                         data-bind="text: $parent.suites()[$data].tests().length"></span>
+                                                                                              <span class="badge badge-success count"
+                                                                                                    data-bind="visible: $parent.suites()[$data].passedCount() > 0,text: $parent.suites()[$data].passedCount()"></span>
+                                                                                              <span class="badge badge-important count"
+                                                                                                    data-bind="visible: $parent.suites()[$data].failedCount() > 0,text: $parent.suites()[$data].failedCount()"></span>
 
 
                         </a>
@@ -144,9 +145,9 @@
                     <div class="benchmarkResults"
                          data-bind="visible: $parent.suites()[$data].shouldShow() == 'benchmarks'">
                         <div class=""><a class="" href="#">
-                                                                       <span data-bind="text: $parent.suites()[$data].benchmarkPlatform"
-                                                                             class="badge badge-inverse"></span><span
-                                    data-bind="text: !$parent.suites()[$data].benchmarksDone() ? 'RUNNING...': 'COMPLETED', css: $parent.suites()[$data].benchmarksDone() ? 'badge badge-success' : 'badge badge-warning'"></span>
+                                                                               <span data-bind="text: $parent.suites()[$data].benchmarkPlatform"
+                                                                                     class="badge badge-inverse"></span><span
+                                data-bind="text: !$parent.suites()[$data].benchmarksDone() ? 'RUNNING...': 'COMPLETED', css: $parent.suites()[$data].benchmarksDone() ? 'badge badge-success' : 'badge badge-warning'"></span>
                         </a>
                         </div>
                         <div data-bind="css: 'collapseBenchmarks' + $data">
@@ -166,7 +167,7 @@
                                     <tbody data-bind="'foreach':$parent.suites()[$data].benchmarks">
                                     <tr data-bind="css: fastest() ? 'success' : slowest() ? 'error' : ''">
                                         <td><code class="well help-inline"
-                                                  data-bind="text: expression"></code></td>
+                                                  data-bind="text: name"></code></td>
                                         <td><code class="well help-inline" style='display:none;'
                                                   data-bind="text: timesFaster, visible:timesFaster"></code>
                                         </td>
@@ -194,6 +195,8 @@
             </div>
 
         </div>
+
     </div>
+
 </div>
 

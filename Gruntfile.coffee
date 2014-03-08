@@ -14,10 +14,16 @@ module.exports = (grunt) ->
   testServerPort = 4000
   testServerUrl = 'localhost:' + testServerPort
   testServerWebSocketPort = 1337
+
+
+  console.log grunt.option('proj')
+  if typeof grunt.option('proj') isnt "undefined"
+    projects.currentProject = grunt.option('proj')
+
+
   config = projects[projects.currentProject]
 
-  if typeof grunt.option('proj') isnt "undefined" and typeof (projects[grunt.option('proj')]) isnt "undefined"
-    config = projects[grunt.option('proj')]
+  console.log config
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-clean'
@@ -30,7 +36,9 @@ module.exports = (grunt) ->
   # Make task shortcuts
   grunt.registerTask 'default', ['parallel:dev']
   grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','instrument','requirejs','copy:main','copy:specs','coffeeCompile','startUnitTestServer','openTest']
+  grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:main','copy:specs','coffeeCompile']
 
+  console.log grunt.option
   # Configure Grunt
   grunt.initConfig
     requirejs:
@@ -92,13 +100,12 @@ module.exports = (grunt) ->
       dev:
         options:
           stream: true
-          grunt: true
-        tasks: ['test','watch']
+        tasks: [ { grunt: true, args: ['test','--proj',projects.currentProject] }, { grunt: true, args: ['watch','--proj',projects.currentProject] }]
 
     watch:
       currentProj:
-        files: [config.specsPath + '**/**/*.js', config.jsUnderTestPath + '**/**/*.js']
-        tasks:['clean','copy','instrument']
+        files: [config.specsPath + '**', config.jsUnderTestPath + '**']
+        tasks:['update']
         options:
           nospawn: true
           interrupt: true
@@ -109,6 +116,7 @@ module.exports = (grunt) ->
         options:
           nospawn: true
           interrupt: true
+          livereload: testServerWebSocketPort
 
   grunt.registerTask 'startUnitTestServer', ->
     alreadyOn = false

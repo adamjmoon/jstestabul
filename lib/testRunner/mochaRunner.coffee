@@ -20,9 +20,9 @@ define [
           require specs, ->
             runner = mocha.run()
             runner.on "end", ->
-              ItchCork.suiteView.totals.Tests runner.total
-              ItchCork.suiteView.totals.Passed runner.stats.passes
-              ItchCork.suiteView.totals.Failed runner.stats.failures
+              ItchCork.suiteView.stats.tests runner.total
+              ItchCork.suiteView.stats.passes runner.stats.passes
+              ItchCork.suiteView.stats.failures runner.stats.failures
               $("#mocha a").attr "href", "#"
               $("#mocha code").addClass "well"
               $("#mocha a").click ->

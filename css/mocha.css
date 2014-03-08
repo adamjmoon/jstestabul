@@ -442,21 +442,21 @@ div.badge-code {
     height: 100%;
 }
 
-#mocha {
+#wrapper{
     overflow: auto !important;
+    height: 100%;
+    top:45px;
+    bottom: 45px;
+}
+#mocha {
+
 }
 
 #itchcorkWrapper {
-    position: relative;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
 }
 
 #itchcork {
-    overflow: auto;
+    bottom: 45px;
     height: 100%;
 }
 

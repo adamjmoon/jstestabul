@@ -33,8 +33,15 @@ define (require) ->
 
         runItchCork = (specList)->
           ItchCork.suiteView.expectedSuiteCount = specList.length
-          ItchCork.suiteView.done = ->
+          ItchCork.suiteView.on("end", ->
+            stats =
+              tests: ItchCork.suiteView.stats.tests()
+              passes: ItchCork.suiteView.stats.passes()
+              failures: ItchCork.suiteView.stats.failures()
             postCoverage()
+            postResults stats
+            return
+          )
           require specList
           return
 

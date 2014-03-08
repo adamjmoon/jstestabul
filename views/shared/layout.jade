@@ -17,7 +17,7 @@ html
         script(type='text/javascript', src='lib/knockout.validation.js')
         script(type='text/javascript', src='lib/jquery.js')
         script(type='text/javascript', src='lib/require.js', data-main="main.js")
-        //        script(type='text/javascript', src='//localhost:1337/livereload.js')
+        script(type='text/javascript', src='//localhost:1337/livereload.js')
     body
         #outer.outer
             .loading(style="display:block;",data-bind='visible: !viewBounded') Loading&#8230;
@@ -37,7 +37,7 @@ html
                                 a(href='', data-bind='click: function(){navBindings.setTheme("superhero");}') Superhero
                             li
                                 a(href='', data-bind='click: function(){navBindings.setTheme("customTheme");}') Custom
-                            ul.nav.nav-tabs.nav-stacked(style='display: none;', data-bind='visible: navBindings.currentTheme() ==="customTheme"')
+                            ul.nav.nav-tabs.nav-stacked(style='display: none;', data-bind='jscolor,visible: navBindings.currentTheme() ==="customTheme"')
                                 li
                                     a(href='', data-bind='click: function(){navBindings.themeManager.resetCustomTheme();}')
                                         .navbar.navbar-inverse.menu-title
@@ -151,8 +151,8 @@ html
                                     a.well.pill-link(href='/coverage') Coverage
                         .well(style='float:right; top: 2px; padding: 3px !important;')
 
-                            span.well.badge.badge-success.headCount(data-bind='text: totals.Passed()')
-                            span.well.badge.badge-important.headCount(data-bind='text: totals.Failed(), visible: totals.Failed() > 0')
+                            span#totalPassed.well.badge.badge-success.headCount(data-bind='text: stats.passes()')
+                            span#totalFailed.well.badge.badge-important.headCount(data-bind='text: stats.failures(), visible: stats.failures() > 0')
 
 
                     div.results.well(style="display:none;z-index: 3000;",data-bind='visible: viewBounded')
