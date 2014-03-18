@@ -9,3 +9,5 @@ OneTechnologies.NuGetServer/*
 */**/*.log
 /*/Gruntfile.js
 /*/coverage.json
+*.js
+*/*.js

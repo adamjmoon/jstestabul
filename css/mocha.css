@@ -1,4 +1,6 @@
-* {-webkit-user-select: all !important;}
+* {
+    -webkit-user-select: all !important;
+}
 
 @font-face {
     font-family: 'Glyphicons Halflings';
@@ -356,7 +358,6 @@ span.headCount {
     height: 32px;
 }
 
-
 .collapser {
     display: inline-block;
     white-space: nowrap;
@@ -426,7 +427,7 @@ div.code {
 }
 
 /*div.results {*/
-    /*overflow: auto !important;*/
+/*overflow: auto !important;*/
 /*}*/
 
 div.badge-code {
@@ -442,20 +443,25 @@ div.badge-code {
     height: 100%;
 }
 
-#wrapper{
+#wrapper {
     overflow: auto !important;
     height: 100%;
-    top:45px;
+    top: 45px;
     bottom: 45px;
 }
-#mocha {
 
+#mocha {
+    position: relative;
+    bottom: 45px;
+    height: 100%;
 }
 
 #itchcorkWrapper {
 }
 
 #itchcork {
+    position: relative;
+    top: 45px;
     bottom: 45px;
     height: 100%;
 }
@@ -489,7 +495,7 @@ div.code-js:before {
     content: 'js';
     color: #000;
     position: absolute;
-    padding:  2px;
+    padding: 2px;
     right: 8px;
     top: 2px;
     background-color: #99ff9a;
@@ -511,7 +517,7 @@ div.code-coffee:before {
     font-weight: bold;
 }
 
-.suite-div{
+.suite-div {
     height: 50px;
     padding-top: 5px;
 }

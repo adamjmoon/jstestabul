@@ -35,7 +35,7 @@ module.exports = (grunt) ->
 
   # Make task shortcuts
   grunt.registerTask 'default', ['parallel:dev']
-  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','instrument','requirejs','copy:main','copy:specs','coffeeCompile','startUnitTestServer','openTest']
+  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','instrument','copy:main','copy:specs','coffeeCompile','startUnitTestServer','openTest']
   grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:main','copy:specs','coffeeCompile']
 
   console.log grunt.option

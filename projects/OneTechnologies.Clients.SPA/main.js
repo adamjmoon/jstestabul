@@ -10,6 +10,7 @@ define(function (require) {
         'durandal': pathRef + 'lib/durandal',
         'plugins': pathRef + 'lib/durandal/plugins',
         'transitions': pathRef + 'lib/durandal/transitions',
+        'async' : 'vendor/requirejs-async/async',
         'platform': pathRef + 'lib/platform',
         'lodash': pathRef + 'lib/lodash',
         'benchmark': pathRef + 'lib/benchmark',
