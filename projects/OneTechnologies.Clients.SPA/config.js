@@ -3,7 +3,7 @@ var config;
 
 config = {};
 
-config.path = "../../WebClients/OneTechnologies.Clients.SPA/Content/assets/";
+config.path = "../WebClients/OneTechnologies.Clients.SPA/Content/public/";
 
 config.rootPath = "/";
 

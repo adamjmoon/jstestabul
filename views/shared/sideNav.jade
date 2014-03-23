@@ -1,0 +1,116 @@
+nav#main-nav.main-nav.menu.well(data-bind="closeMenu")
+    .collapse-inner
+        .navbar.navbar-inverse.menu-title
+           span.badge.badge-info Themes
+        ul.nav.nav-tabs.nav-stacked
+            li
+                a(href='', data-bind='click: function(){navBindings.setTheme("curelean");}') Cerulean
+            li
+                a(href='', data-bind='click: function(){navBindings.setTheme("cosmo");}') Cosmo
+            li
+                a(href='', data-bind='click: function(){navBindings.setTheme("cyborg");}') Cyborg
+            li
+                a(href='', data-bind='click: function(){navBindings.setTheme("superhero");}') Superhero
+            li
+                a(href='', data-bind='click: function(){navBindings.setTheme("customTheme");}') Custom
+            ul.nav.nav-tabs.nav-stacked(style='display: none;', data-bind='jscolor,visible: navBindings.currentTheme() ==="customTheme"')
+                li
+                    a(href='', data-bind='click: function(){navBindings.themeManager.resetCustomTheme();}')
+                        .navbar.navbar-inverse.menu-title
+                            .navbar-inner
+                                span.badge.badge-inverse Reset Custom Theme
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Body Font Color
+                    input.color(data-bind='value: navBindings.cto.bodyFontColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Body Background Color
+                    input.color(data-bind='value: navBindings.cto.bodyBackgroundColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Body Gradient From Color
+                    input.color(data-bind='value: navBindings.cto.bodyGradientFromColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Body Gradient To Color
+                    input.color(data-bind='value: navBindings.cto.bodyGradientToColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Info Color
+                    input.color(data-bind='value: navBindings.cto.infoColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Code Color
+                    input.color(data-bind='value: navBindings.cto.codeColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Code Font Family
+                    input(data-bind='value: navBindings.cto.codeFontFamily')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Font Size
+                    input(data-bind='value: navBindings.cto.fontSize')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Hover Color
+                    input.color(data-bind='value: navBindings.cto.hoverColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Well Background Color
+                    input.color(data-bind='value: navBindings.cto.wellBackgroundColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Top Nav Background Color
+                    input.color(data-bind='value: navBindings.cto.navBackgroundColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Suite Heading Background Color
+                    input.color(data-bind='value: navBindings.cto.navBarInnerBackgroundColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Inverse Color
+                    input.color(data-bind='value: navBindings.cto.inverseColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Success Color
+                    input.color(data-bind='value: navBindings.cto.successColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Error Color
+                    input.color(data-bind='value: navBindings.cto.errorColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Completed Color
+                    input.color(data-bind='value: navBindings.cto.completedColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Table Border Color
+                    input.color(data-bind='value: navBindings.cto.tableBorderColor')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Radius
+                    input(data-bind='value: navBindings.cto.radius')
+                li
+                    .navbar.navbar-inverse.menu-title
+                        .navbar-inner
+                            span.badge.badge-info Badge Radius
+                    input(data-bind='value: navBindings.cto.badgeRadius')

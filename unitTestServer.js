@@ -19,8 +19,8 @@ app.configure('production', function () {
 
 app.configure(function () {
     app.locals.basedir = __dirname;
-    app.set('port', 4000);
-    app.set('views', app.locals.basedir + '/views/');
+    app.set('port', 4050);
+    app.set('views', app.locals.basedir + '/');
     app.set('view engine', 'jade');
     app.use(express.favicon());
 

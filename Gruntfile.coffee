@@ -11,7 +11,7 @@ module.exports = (grunt) ->
   cp = require('child_process')
   projects = require('./projects/config.coffee')
   testServerPath = testServer + 'unitTestServer.js'
-  testServerPort = 4000
+  testServerPort = 4050
   testServerUrl = 'localhost:' + testServerPort
   testServerWebSocketPort = 1337
 
@@ -34,8 +34,8 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-requirejs'
 
   # Make task shortcuts
-  grunt.registerTask 'default', ['parallel:dev']
-  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','instrument','copy:main','copy:specs','coffeeCompile','startUnitTestServer','openTest']
+  grunt.registerTask 'default', ['parallel:dev','openBrowser']
+  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','instrument','requirejs','copy:main','copy:specs','coffeeCompile','startUnitTestServer']
   grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:main','copy:specs','coffeeCompile']
 
   console.log grunt.option
@@ -53,6 +53,7 @@ module.exports = (grunt) ->
                   'lib': '../../lib'
           }
           inlineText: true,
+          optimize: "none"
           optimizeAllPluginResources: true
           pragmas: {
               build: true
@@ -150,7 +151,7 @@ module.exports = (grunt) ->
     coffeeSrc.stderr.pipe process.stderr
     done = this.async()
 
-  grunt.registerTask 'openTest', ->
+  grunt.registerTask 'openBrowser', ->
     openPage done, testServerUrl
     done = this.async()
 
@@ -164,12 +165,16 @@ module.exports = (grunt) ->
       done()
 
   openPage = (doneCallback, url) ->
-    console.log(url)
-    spawn = require('child_process').spawn
-    chrome = spawn process.env[(if (process.platform is 'win32') then 'USERPROFILE' else 'HOME')] +
-    '//AppData//Local//Google//Chrome//Application//chrome.exe',
-      ['--new-tab --enable-benchmarks', url]
-    doneCallback()
+    callback = (result) ->
+      if result
+        console.log(url)
+        spawn = require('child_process').spawn
+        chrome = spawn process.env[(if (process.platform is 'win32') then 'USERPROFILE' else 'HOME')] +
+        '//AppData//Local//Google//Chrome//Application//chrome.exe',
+          ['--new-tab --enable-benchmarks', url]
+      doneCallback()
+    testSocket testServerWebSocketPort, this.async, callback
+
 
   testSocket = (port, async, result) ->
     net = require('net')
@@ -177,6 +182,7 @@ module.exports = (grunt) ->
     sock.setTimeout 1500
     sock.on('connect',
     () ->
+      console.log
       result true
       done()
     ).on('error',

@@ -1,8 +1,8 @@
-OneTechnologies.NuGetServer/*
-*/_instrumented/*
-*/_src/*
-*/node_modules/*
-*/specs/*
+/_instrumented/*
+/_src/*
+node_modules/*
+specs/*
+results/*
 */coverage/*
 */.idea/*
 /.idea/*

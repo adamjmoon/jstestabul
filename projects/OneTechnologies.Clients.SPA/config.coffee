@@ -1,6 +1,6 @@
 config = {}
 
-config.path = "../../WebClients/OneTechnologies.Clients.SPA/Content/assets/"
+config.path = "../WebClients/OneTechnologies.Clients.SPA/Content/public/"
 config.rootPath = "/"
 config.jsUnderTestPath = config.path + "javascripts/"
 config.jsUnderTestInclude = ['**',"!*.js",'!**/main.coffee', '!specs/**']

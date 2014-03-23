@@ -1,7 +1,7 @@
 define(function (require) {
     "use strict";
-    var withCoverage = window.location.pathname.indexOf("coverage") > -1;
-    window.pathRef = withCoverage ? "../../" : "../" ;
+    var withCoverage = window.location.hash.indexOf("coverage") > -1;
+    window.pathRef = withCoverage ? "../../" : "../";
     var pathsConfig = {
         'hammer': 'vendor/hammerjs/jquery.hammer',
         'iscroll': 'vendor/iscroll/iscroll',
@@ -10,14 +10,14 @@ define(function (require) {
         'durandal': pathRef + 'lib/durandal',
         'plugins': pathRef + 'lib/durandal/plugins',
         'transitions': pathRef + 'lib/durandal/transitions',
-        'async' : 'vendor/requirejs-async/async',
+        'async': 'vendor/requirejs-async/async',
         'platform': pathRef + 'lib/platform',
         'lodash': pathRef + 'lib/lodash',
         'benchmark': pathRef + 'lib/benchmark',
-        'knockout': pathRef + 'lib/knockout',
         'knockoutValidation': pathRef + 'lib/knockout.validation',
         'lib': pathRef + 'lib',
-        'specs':  pathRef + 'specs'
+        'specs': pathRef + 'specs',
+        'app': pathRef + 'app'
     };
 
     if (!withCoverage) {
@@ -34,9 +34,17 @@ define(function (require) {
         });
     }
 
-    require([pathRef + 'lib/when'],function(When){
+    require([pathRef + 'lib/when'], function (When) {
+        define('jquery', function () {
+            return $;
+        });
+
+        define('knockout', function () {
+            return ko;
+        });
+
         window.When = When;
-        require(['ot/jsUtils', 'lib/testRunner/runner'], function () {
+        require(['ot/jsUtils', 'app/main'], function () {
             ko.validation.configure({
                 registerExtenders: true,
                 messagesOnModified: true,

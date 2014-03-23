@@ -13,6 +13,8 @@ config.jsUnderTestInclude = ['**', '!specs/**'];
 
 config.specsPath = config.jsUnderTestPath + "specs/";
 
+config.specNamingConvention = '_spec';
+
 config.framework = "itchcork";
 
 module.exports = config;
