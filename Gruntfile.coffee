@@ -77,7 +77,7 @@ module.exports = (grunt) ->
         ]
       main:
         files: [
-          {expand: true, cwd: 'projects/'+projects.currentProject, flatten: false, src: ['main.js'], dest: ''}
+          {expand: true, cwd: 'projects/'+projects.currentProject, flatten: false, src: ['paths.js'], dest: 'app'}
         ]
 
     concat:

@@ -1,4 +1,4 @@
-<div id="view" class="well view" style="position: absolute; top: 0px; left:0px; right: 0px; bottom: 0px;"
+<div id="" class="well view" style="position: absolute; top: 0px; left:0px; right: 0px; bottom: 0px;"
      data-bind="openMenu, localScroll: {target: '#wrapper'}">
     <div class="" style="position: fixed;bottom: 10px;right:20px;z-index: 1000; display: none;"
          data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
@@ -11,7 +11,7 @@
     <div id="wrapper" class="col-md-12">
 
         <div id="mochaWrapper" class="mochaWrapper"
-             data-bind="visible: viewSpecs()">
+             data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
             <div class="" style="position:absolute;left:80%;top: 5px;z-index: 1000;">
                 <a id="mochaSuiteExpander"
                    class="collapser corkClass"
@@ -38,15 +38,13 @@
                         <a class=""
                            data-bind="attr: {'href': '#' + $data}, click: $parent.selectSuite($data)">
 
-                                                                                    <span data-bind="text: $parent.suites()[$data].suiteDesc()"
-                                                                                          class="label label-info suiteLabel"
-                                                                                          style=""/>
-                                                                                   <span class="badge badge-info count"
-                                                                                         data-bind="text: $parent.suites()[$data].tests().length"></span>
-                                                                                              <span class="badge badge-success count"
-                                                                                                    data-bind="visible: $parent.suites()[$data].passedCount() > 0,text: $parent.suites()[$data].passedCount()"></span>
-                                                                                              <span class="badge badge-important count"
-                                                                                                    data-bind="visible: $parent.suites()[$data].failedCount() > 0,text: $parent.suites()[$data].failedCount()"></span>
+                        <span data-bind="text: $parent.suites()[$data].suiteDesc()"
+                              class="label label-info suiteLabel"
+                              style=""/>
+                                  <span class="badge badge-success count"
+                                        data-bind="visible: $parent.suites()[$data].passedCount() > 0,text: $parent.suites()[$data].passedCount()"></span>
+                                  <span class="badge badge-important count"
+                                        data-bind="visible: $parent.suites()[$data].failedCount() > 0,text: $parent.suites()[$data].failedCount()"></span>
 
 
                         </a>
@@ -200,3 +198,7 @@
 
 </div>
 
+<div style="position:absolute; z-index: 9999; top: 3px; right: 3px; padding: 3px !important;">
+    <span id="totalPassed" data-bind="text: stats.passes()" class="well badge badge-success headCount"></span>
+    <span id="totalFailed" data-bind="text: stats.failures(), visible: stats.failures() &gt; 0" class="well badge badge-important headCount"></span>
+</div>

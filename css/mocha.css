@@ -121,7 +121,7 @@ pre {
 }
 
 #mocha .test.pass::before {
-    content: '✓';
+    content: '???';
     font-size: 12px;
     display: block;
     float: left;
@@ -155,7 +155,7 @@ pre {
 }
 
 #mocha .test.pending::before {
-    content: '◦';
+    content: '???';
     color: #0b97c4;
 }
 
@@ -175,7 +175,7 @@ pre {
 }
 
 #mocha .test.fail::before {
-    content: '✖';
+    content: '???';
     font-size: 12px;
     display: block;
     float: left;
@@ -336,7 +336,7 @@ a {
     width: 100%;
     left: 0;
     transition: all 0.3s ease;
-    border-left: 1px solid #000;
+    border-bottom: 3px solid #fff;
     height: 45px;
     z-index: 1000;
 }
@@ -446,7 +446,7 @@ div.badge-code {
 #wrapper {
     overflow: auto !important;
     height: 100%;
-    top: 45px;
+    top: 0px;
     bottom: 45px;
 }
 

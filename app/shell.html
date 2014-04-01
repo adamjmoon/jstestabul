@@ -1,20 +1,142 @@
-﻿<div>
-    <div class="navbar navbar-fixed-top">
-        <div class="navbar-inner">
-            <a class="brand" data-bind="attr: { href: router.navigationModel()[0].hash }">
-                <i class="icon-home"></i>
-                <span>Durandal</span>
-            </a>
-            <ul class="nav" data-bind="foreach: router.navigationModel">
-                <li data-bind="css: { active: isActive }">
-                    <a data-bind="attr: { href: hash }, html: title"></a>
-                </li>
-            </ul>
-            <div class="loader pull-right" data-bind="css: { active: router.isNavigating }">
-                <i class="icon-spinner icon-2x icon-spin"></i>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container-fluid page-host" data-bind="router: { transition:'entrance', cacheViews:true }"></div>
+
+<div data-bind="visible: router.isNavigating" class="loading">Loading?</div>
+<div class="navbar navbar-fixed-top well">
+  <div class="main-header"><span id="open-menu" data-bind="openMenuOnTap" class="open-menu"><i class="fa fa-bars"></i><span class="brandit">jstestabul</span></span><span id="close-menu" data-bind="closeMenuOnTap" class="close-menu"><i class="fa fa-bars"></i><span class="brandit">jstestabul</span></span></div>
 </div>
+<nav id="main-nav" data-bind="closeMenuOnSwipe" class="main-nav menu well">
+  <div class="collapse-inner">
+    <ul data-bind="foreach: router.navigationModel" class="nav nav-tabs nav-stacked">
+      <li data-bind="css: { active: isActive }"><a data-bind="closeMenuOnTap, attr: { href: hash }, html: title"></a></li>
+    </ul>
+    <div class="navbar navbar-inverse menu-title"><span class="badge badge-info">Theme</span></div>
+    <ul class="nav nav-tabs nav-stacked">
+      <li><a href="" data-bind="closeMenuOnTap,click: function(){themeManager.set(&quot;curelean&quot;);}">Cerulean</a></li>
+      <li><a href="" data-bind="closeMenuOnTap,click: function(){themeManager.set(&quot;cosmo&quot;);}">Cosmo</a></li>
+      <li><a href="" data-bind="closeMenuOnTap,click: function(){themeManager.set(&quot;cyborg&quot;);}">Cyborg</a></li>
+      <li><a href="" data-bind="closeMenuOnTap,click: function(){themeManager.set(&quot;superhero&quot;);}">Superhero</a></li>
+      <li><a href="" data-bind="click: function(){themeManager.set(&quot;customTheme&quot;);}">Custom</a>
+        <ul style="display: none;" data-bind="jscolor,visible: themeManager.customTheme.isActive()" class="nav nav-tabs nav-stacked">
+          <li><a href="" data-bind="click: function(){themeManager.resetCustomTheme();}">
+              <div class="navbar navbar-inverse menu-title">
+                <div class="navbar-inner"><span class="badge badge-inverse">Reset Custom Theme</span></div>
+              </div></a></li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Body Font Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.bodyFontColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Body Background Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.bodyBackgroundColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Body Gradient From Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.bodyGradientFromColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Body Gradient To Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.bodyGradientToColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Info Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.infoColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Code Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.codeColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Code Font Family</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.codeFontFamily"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Font Size</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.fontSize"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Hover Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.hoverColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Well Background Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.wellBackgroundColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Top Nav Background Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.navBackgroundColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Suite Heading Background Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.navBarInnerBackgroundColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Inverse Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.inverseColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Success Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.successColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Error Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.errorColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Completed Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.completedColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Table Border Color</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.tableBorderColor" class="color"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Radius</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.radius"/>
+          </li>
+          <li>
+            <div class="navbar navbar-inverse menu-title">
+              <div class="navbar-inner"><span class="badge badge-info">Badge Radius</span></div>
+            </div>
+            <input data-bind="value: themeManager.customTheme.badgeRadius"/>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div data-bind="router: { transition:'entrance', cacheViews:false }" style ="position:absolute; left: 0; right: 0; bottom: 50px; top: 0px;" class="page-host"></div>

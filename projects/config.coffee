@@ -4,6 +4,6 @@ projects["OneTechnologies.Clients.SPA"] = require './OneTechnologies.Clients.SPA
 projects["jsBenchmarks"] = require './jsBenchmarks/config.coffee'
 projects["ToDoApp"] = require './ToDoApp/config.coffee'
 
-projects.currentProject = "OneTechnologies.Clients.SPA"
+projects.currentProject = "jsBenchmarks"
 
 module.exports = projects

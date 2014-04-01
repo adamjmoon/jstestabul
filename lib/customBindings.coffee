@@ -1,5 +1,4 @@
-define ["./customBindings/closeMenu"
-        "./customBindings/drag"
+define ["./customBindings/drag"
         "./customBindings/dragDown"
         "./customBindings/dragEnd"
         "./customBindings/dragLeft"
@@ -7,7 +6,7 @@ define ["./customBindings/closeMenu"
         "./customBindings/hold"
         "./customBindings/jscolor"
         "./customBindings/localScroll"
-        "./customBindings/openMenu"
         "./customBindings/swipeLeft"
         "./customBindings/swipeRight"
-        "./customBindings/tap"]
+        "./customBindings/tap",
+        "./customBindings/menu"]
