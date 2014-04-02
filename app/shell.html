@@ -18,7 +18,7 @@
         <ul style="display: none;" data-bind="jscolor,visible: themeManager.customTheme.isActive()" class="nav nav-tabs nav-stacked">
           <li><a href="" data-bind="click: function(){themeManager.resetCustomTheme();}">
               <div class="navbar navbar-inverse menu-title">
-                <div class="navbar-inner"><span class="badge badge-inverse">Reset Custom Theme</span></div>
+                <div class="navbar-inner"><span class="badge badge-info">Reset Custom Theme</span></div>
               </div></a></li>
           <li>
             <div class="navbar navbar-inverse menu-title">
@@ -46,7 +46,7 @@
           </li>
           <li>
             <div class="navbar navbar-inverse menu-title">
-              <div class="navbar-inner"><span class="badge badge-info">Info Color</span></div>
+              <div class="navbar-inner"><span class="badge badge-info">Badge Color</span></div>
             </div>
             <input data-bind="value: themeManager.customTheme.infoColor" class="color"/>
           </li>
@@ -82,7 +82,7 @@
           </li>
           <li>
             <div class="navbar navbar-inverse menu-title">
-              <div class="navbar-inner"><span class="badge badge-info">Top Nav Background Color</span></div>
+              <div class="navbar-inner"><span class="badge badge-info">Nav & Header Background Color</span></div>
             </div>
             <input data-bind="value: themeManager.customTheme.navBackgroundColor" class="color"/>
           </li>
@@ -100,33 +100,9 @@
           </li>
           <li>
             <div class="navbar navbar-inverse menu-title">
-              <div class="navbar-inner"><span class="badge badge-info">Success Color</span></div>
-            </div>
-            <input data-bind="value: themeManager.customTheme.successColor" class="color"/>
-          </li>
-          <li>
-            <div class="navbar navbar-inverse menu-title">
-              <div class="navbar-inner"><span class="badge badge-info">Error Color</span></div>
-            </div>
-            <input data-bind="value: themeManager.customTheme.errorColor" class="color"/>
-          </li>
-          <li>
-            <div class="navbar navbar-inverse menu-title">
-              <div class="navbar-inner"><span class="badge badge-info">Completed Color</span></div>
-            </div>
-            <input data-bind="value: themeManager.customTheme.completedColor" class="color"/>
-          </li>
-          <li>
-            <div class="navbar navbar-inverse menu-title">
               <div class="navbar-inner"><span class="badge badge-info">Table Border Color</span></div>
             </div>
             <input data-bind="value: themeManager.customTheme.tableBorderColor" class="color"/>
-          </li>
-          <li>
-            <div class="navbar navbar-inverse menu-title">
-              <div class="navbar-inner"><span class="badge badge-info">Radius</span></div>
-            </div>
-            <input data-bind="value: themeManager.customTheme.radius"/>
           </li>
           <li>
             <div class="navbar navbar-inverse menu-title">
@@ -139,4 +115,4 @@
     </ul>
   </div>
 </nav>
-<div data-bind="router: { transition:'entrance', cacheViews:false }" style ="position:absolute; left: 0; right: 0; bottom: 50px; top: 0px;" class="page-host"></div>
+<div data-bind="router: { transition:'entrance', cacheViews:true }" class="page-host"></div>

@@ -445,9 +445,8 @@ div.badge-code {
 
 #wrapper {
     overflow: auto !important;
-    height: 100%;
     top: 0px;
-    bottom: 45px;
+    bottom: 0px;
 }
 
 #mocha {
@@ -456,14 +455,26 @@ div.badge-code {
     height: 100%;
 }
 
-#itchcorkWrapper {
-}
 
 #itchcork {
-    position: relative;
+    position: fixed;
     top: 45px;
-    bottom: 45px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+.suite-list {
+    position: relative;
     height: 100%;
+    overflow: auto;
+}
+
+.suite-selected{
+    position: relative;
+    height: 100%;
+    overflow: auto;
+    top: 10px;
 }
 
 html {
@@ -528,4 +539,12 @@ div.code-coffee:before {
 
 .suiteLabel {
     text-align: center;
+}
+
+.page-host{
+    position:absolute; left: 0; right: 0; bottom: 0; top: 0;
+}
+
+.suite-selected-section{
+    margin-top: 35px;
 }

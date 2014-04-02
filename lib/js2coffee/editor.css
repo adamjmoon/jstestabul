@@ -6,11 +6,10 @@ body {
 #editor-wrapper {
     position: absolute;
     top: 28px;
-    left: 0;
+    left: 5px;
     bottom: 0;
-    right: 0;
+    right: 5px;
     background: white;
-    width: 95%;
     margin: 0 auto;
     border: 1px solid #e6e4e0;
 }

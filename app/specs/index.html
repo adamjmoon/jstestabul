@@ -1,204 +1,203 @@
-<div id="" class="well view" style="position: absolute; top: 0px; left:0px; right: 0px; bottom: 0px;"
-     data-bind="openMenu, localScroll: {target: '#wrapper'}">
-    <div class="" style="position: fixed;bottom: 10px;right:20px;z-index: 1000; display: none;"
-         data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
-        <a class="btn btn-sm btn-primary" href=""
-           data-bind="css: viewSpecs() ? 'active' : '' , click: function(){ viewSpecs(true); viewSrc(false); }">SPECS</a>
-        <a class="btn btn-sm btn-primary" href=""
-           data-bind="css: viewSrc() ? 'active' : '' , click: function(){ viewSpecs(false); viewSrc(true);}">SOURCE</a>
-    </div>
-
-    <div id="wrapper" class="col-md-12">
-
-        <div id="mochaWrapper" class="mochaWrapper"
-             data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
-            <div class="" style="position:absolute;left:80%;top: 5px;z-index: 1000;">
-                <a id="mochaSuiteExpander"
-                   class="collapser corkClass"
-                   data-bind="click: changeMochaSuitesState(), css: collapseMocha() ? 'expandAll' : 'collapseAll' ">
-                    <img id="corkCollapse" class=""
-                         data-bind="attr:{'title': collapseMocha() ? 'Expand Suites' : 'Collapse Suites' }"
-                         src="/img/menulogo.png" class=""/>
-                </a>
-            </div>
-            <div id="mocha" class="col-md-12"
-                 style="height:100%;overflow: auto !important;margin-top: 34px;"></div>
-        </div>
-
-        <div class="col-md-12" id="itchcork"
-             data-bind="visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork','foreach': Object.keys(suites())"
-
-             style="display: block !important;">
-
-            <div class="well" style="clear: both;">
-                <div id="suiteDescription" class="col-md-12 suite-div"
-                     data-bind="attr: {'id' : $data},localScroll: {target: '#itchcork'}">
-
-                    <div class="well">
-                        <a class=""
-                           data-bind="attr: {'href': '#' + $data}, click: $parent.selectSuite($data)">
-
-                        <span data-bind="text: $parent.suites()[$data].suiteDesc()"
-                              class="label label-info suiteLabel"
-                              style=""/>
-                                  <span class="badge badge-success count"
-                                        data-bind="visible: $parent.suites()[$data].passedCount() > 0,text: $parent.suites()[$data].passedCount()"></span>
-                                  <span class="badge badge-important count"
-                                        data-bind="visible: $parent.suites()[$data].failedCount() > 0,text: $parent.suites()[$data].failedCount()"></span>
-
-
-                        </a>
-                    </div>
-
-
-                    <a data-bind="attr: {'href': '#' + $data},click: function (){$parent.selectSuite($data);$parent.suites()[$data].shouldShow('source');}, css: $parent.suites()[$data].shouldShow() == 'source' ? 'label label-success' : 'label' ">
-                        <span class="">CODE</span></a>
-                    <a data-bind="attr: {'href': '#' + $data},click: function (){$parent.selectSuite($data);$parent.suites()[$data].shouldShow('properties');}, css: $parent.suites()[$data].shouldShow() == 'properties' ? 'label label-success' : 'label' "><span
-                            class="">PROPERTIES</span></a>
-                    <a class=""
-                       data-bind="attr: {'href': '#' + $data},visible: $parent.suites()[$data].tests().length > 0,click: function (){$parent.selectSuite($data);$parent.suites()[$data].shouldShow('tests');}, css: $parent.suites()[$data].shouldShow() == 'tests' ? 'label label-success' : 'label' "><span
-                            class="">TESTS</span></a>
-                    <a class=""
-                       data-bind="attr: {'href': '#' + $data},visible: $parent.suites()[$data].benchmarkingEnabled(), click: function (){$parent.selectSuite($data);$parent.suites()[$data].shouldShow('benchmarks');}, css: $parent.suites()[$data].shouldShow() == 'benchmarks' ? 'label label-success' : 'label' "><span
-                            class="">BENCHMARKS</span></a>
-                </div>
-                <div data-bind="visible: $parent.selectedSuite() == $data">
-                    <div class="codeProcessed" data-bind="visible:$parent.suites()[$data].codeModel.processed">
-
-                        <!--<div class="col-md-12 well">-->
-                        <!--<a class="btn btn-warning"-->
-                        <!--data-bind="attr: {'href': '#contextSource_' + $data, 'id': 'contextSource_' + $data }"><span-->
-                        <!--class="badge badge-info">SOURCE</span></a>-->
-                        <!--</div>-->
-                        <div class="" data-bind="visible: $parent.suites()[$data].shouldShow() == 'source'">
-                            <div class="col-md-6 col-xs-11 sourceCode">
-
-                                <div class="code code-coffee well"
-                                     data-bind="html:$parent.suites()[$data].codeModel.coffeeSourceStr"></div>
-
-                            </div>
-                            <div class="col-md-6 col-xs-11 sourceCode">
-
-
-                                <div class="code code-js well"
-                                     data-bind="html:$parent.suites()[$data].codeModel.jsSourceStr"></div>
-                            </div>
-                        </div>
-
-
-                        <div class="" data-bind="visible: $parent.suites()[$data].shouldShow() == 'properties'">
-
-                            <div class="" data-bind="'foreach':$parent.suites()[$data].codeModel.properties">
-                                <div class="col-md-11"><label class="label label-info"
-                                                              data-bind="text: name"></label></div>
-                                <div class="col-md-6 col-xs-11 sourceCode well">
-                                    <div class="code code-coffee well" data-bind="html: coffeeStr"></div>
-                                </div>
-                                <div class="col-md-6 col-xs-11 sourceCode well">
-                                    <div class="code code-js well" data-bind="html: jsStr"></div>
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <div class="tests"
-                         data-bind="attr: { id: 'TestResults' + $data}, visible: $parent.suites()[$data].shouldShow() == 'tests'">
-
-                        <div data-bind="css: 'collapseResults' + $data">
-                            <div class="results" id="itchcorkResults"
-                                 data-bind="">
-                                <table class="table" id="results">
-                                    <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>should.equal</th>
-                                        <th>actual</th>
-                                        <th>typeof</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody data-bind="'foreach':$parent.suites()[$data].tests">
-                                    <tr data-bind="css: passed ? 'success' : 'error', visible: describe">
-                                        <td colspan='4'><span class="badge badge-info"
-                                                              data-bind="text: describe"></span>
-                                        </td>
-                                    </tr>
-                                    <tr data-bind="css: passed ? 'success' : 'error'">
-                                        <td><code class="well help-inline"
-                                                  data-bind="text: expression"></code></td>
-                                        <td><code class="well help-inline"
-                                                  data-bind="text: shouldEqual"></code></td>
-                                        <td><code class="well help-inline" data-bind="text: actual"></code>
-                                        </td>
-                                        <td><code class="well help-inline" data-bind="text: typeOf"></code>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="benchmarkResults"
-                         data-bind="visible: $parent.suites()[$data].shouldShow() == 'benchmarks'">
-                        <div class=""><a class="" href="#">
-                                                                               <span data-bind="text: $parent.suites()[$data].benchmarkPlatform"
-                                                                                     class="badge badge-inverse"></span><span
-                                data-bind="text: !$parent.suites()[$data].benchmarksDone() ? 'RUNNING...': 'COMPLETED', css: $parent.suites()[$data].benchmarksDone() ? 'badge badge-success' : 'badge badge-warning'"></span>
-                        </a>
-                        </div>
-                        <div data-bind="css: 'collapseBenchmarks' + $data">
-                            <div class="results">
-                                <table class="table">
-                                    <thead>
-                                    <tr>
-                                        <th>expression</th>
-                                        <th>times faster</th>
-                                        <th>ops/sec</th>
-                                        <th>+/-</th>
-                                        <th># analysis cycles</th>
-                                        <th># sample cycles</th>
-                                        <th>iterations/sample cycle</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody data-bind="'foreach':$parent.suites()[$data].benchmarks">
-                                    <tr data-bind="css: fastest() ? 'success' : slowest() ? 'error' : ''">
-                                        <td><code class="well help-inline"
-                                                  data-bind="text: name"></code></td>
-                                        <td><code class="well help-inline" style='display:none;'
-                                                  data-bind="text: timesFaster, visible:timesFaster"></code>
-                                        </td>
-                                        <td><code class="well help-inline" data-bind="text: hz"></code></td>
-                                        <td><code class="well help-inline"
-                                                  data-bind="text: relativateMarginError"></code></td>
-                                        <td><code class="well help-inline"
-                                                  data-bind="text: numAnalysisCycles"></code></td>
-                                        <td><code class="well help-inline"
-                                                  data-bind="text: numSampleCycles"></code></td>
-                                        <td><code class="well help-inline"
-                                                  data-bind="text: iterationPerSampleCycle"></code></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <button style="display:none;margin-bottom: 5px;" class='btn btn-large run-again'
-                                    data-bind="click:$parent.suites()[$data].processBenchmarks,visible:$parent.suites()[$data].benchmarksDone">
-                                RUN AGAIN
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-    </div>
-
+<div class="" style="position: fixed;bottom: 10px;right:20px;z-index: 1000; display: none;"
+     data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
+    <a class="btn btn-sm btn-primary" href=""
+       data-bind="css: viewSpecs() ? 'active' : '' , click: function(){ viewSpecs(true); viewSrc(false); }">SPECS</a>
+    <a class="btn btn-sm btn-primary" href=""
+       data-bind="css: viewSrc() ? 'active' : '' , click: function(){ viewSpecs(false); viewSrc(true);}">SOURCE</a>
 </div>
+
+
+<div id="mochaWrapper" class="mochaWrapper"
+     data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
+    <div class="" style="position:absolute;left:80%;top: 5px;z-index: 1000;">
+        <a id="mochaSuiteExpander"
+           class="collapser corkClass"
+           data-bind="click: changeMochaSuitesState(), css: collapseMocha() ? 'expandAll' : 'collapseAll' ">
+            <img id="corkCollapse" class=""
+                 data-bind="attr:{'title': collapseMocha() ? 'Expand Suites' : 'Collapse Suites' }"
+                 src="/img/menulogo.png" class=""/>
+        </a>
+    </div>
+    <div id="mocha" class="col-md-12"
+         style="height:100%;overflow: auto !important;margin-top: 34px;"></div>
+</div>
+
+<div id="itchcork" class="well"
+     data-bind="localScroll: {target: '#suite-list'},visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork'"
+     style="display: block !important;">
+
+    <div id="suite-list" class="col-md-2 col-sm-3 suite-list" style="position: relative; height: 100%;overflow: auto;"
+         data-bind="'foreach': Object.keys(suites())">
+        <div class="well">
+            <div id="suiteDescription" class="col-md-12 suite-div"
+                 data-bind="attr: {'id' : $data},localScroll: {target: '#itchcork'}">
+
+                <div class="">
+                    <a class=""
+                       data-bind="attr: {'href': '#' + $data}, click: $parent.selectedSuite($data)">
+
+                                            <span data-bind="text: $parent.suites()[$data].suiteDesc()"
+                                                  class="label label-info suiteLabel"
+                                                  style=""/>
+                                                      <span class="badge badge-success count"
+                                                            data-bind="visible: $parent.suites()[$data].passedCount() > 0,text: $parent.suites()[$data].passedCount()"></span>
+                                                      <span class="badge badge-important count"
+                                                            data-bind="visible: $parent.suites()[$data].failedCount() > 0,text: $parent.suites()[$data].failedCount()"></span>
+
+
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <!-- ko if: selectedSuite -->
+    <div class="col-md-10 col-sm-9 well suite-selected">
+        <div class="well col-md-12" style="position: fixed;margin-top: 5px;">
+            <span class="label label-info suiteLabel" data-bind="text: suites()[selectedSuite()].suiteDesc"></span>
+            <div class="" data-bind="click: function (){suites()[selectedSuite()].shouldShow('source');}, css: suites()[selectedSuite()].shouldShow() == 'source' ? 'btn btn-warning' : 'btn' ">
+                <span class="">CODE</span></div>
+            <div data-bind="click: function (){suites()[selectedSuite()].shouldShow('properties');}, css: suites()[selectedSuite()].shouldShow() == 'properties' ? 'btn btn-warning' : 'btn' "><span
+                    class="">PROPERTIES</span></div>
+            <div class=""
+               data-bind="visible: suites()[selectedSuite()].tests().length > 0,click: function (){suites()[selectedSuite()].shouldShow('tests');}, css: suites()[selectedSuite()].shouldShow() == 'tests' ? 'btn btn-warning' : 'btn' "><span
+                    class="">TESTS</span></div>
+            <div class=""
+               data-bind="visible: suites()[selectedSuite()].benchmarkingEnabled(), click: function (){suites()[selectedSuite()].shouldShow('benchmarks');}, css: suites()[selectedSuite()].shouldShow() == 'benchmarks' ? 'btn btn-warning' : 'btn' "><span
+                    class="">BENCHMARKS</span></div>
+        </div>
+
+
+
+        <div class="codeProcessed suite-selected-section">
+
+            <div class="" data-bind="visible: suites()[selectedSuite()].shouldShow() == 'source'">
+                <div class="col-md-6 col-xs-11 sourceCode">
+
+                    <div class="code code-coffee well"
+                         data-bind="html:suites()[selectedSuite()].codeModel.coffeeSourceStr"></div>
+
+                </div>
+                <div class="col-md-6 col-xs-11 sourceCode">
+
+
+                    <div class="code code-js well"
+                         data-bind="html:suites()[selectedSuite()].codeModel.jsSourceStr"></div>
+                </div>
+            </div>
+
+
+            <div class="properties suite-selected-section" data-bind=" visible: suites()[selectedSuite()].shouldShow() == 'properties'">
+
+                <div class="" data-bind="'foreach':suites()[selectedSuite()].codeModel.properties">
+                    <div class="col-md-11"><label class="label label-info"
+                                                  data-bind="text: name"></label></div>
+                    <div class="col-md-6 col-xs-11 sourceCode">
+                        <div class="code code-coffee well" data-bind="html: coffeeStr"></div>
+                    </div>
+                    <div class="col-md-6 col-xs-11 sourceCode">
+                        <div class="code code-js well" data-bind="html: jsStr"></div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tests suite-selected-section"
+             data-bind="attr: { id: 'TestResults'}, visible: suites()[selectedSuite()].shouldShow() == 'tests'">
+
+            <div data-bind="css: 'collapseResults'">
+                <div class="results" id="itchcorkResults"
+                     data-bind="">
+                    <table class="table" id="results">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>should.equal</th>
+                            <th>actual</th>
+                            <th>typeof</th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="'foreach':suites()[selectedSuite()].tests">
+                        <tr data-bind="css: passed ? 'success' : 'error', visible: describe">
+                            <td colspan='4'><span class="badge badge-info"
+                                                  data-bind="text: describe"></span>
+                            </td>
+                        </tr>
+                        <tr data-bind="css: passed ? 'success' : 'error'">
+                            <td><code class="well help-inline"
+                                      data-bind="text: expression"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: shouldEqual"></code></td>
+                            <td><code class="well help-inline" data-bind="text: actual"></code>
+                            </td>
+                            <td><code class="well help-inline" data-bind="text: typeOf"></code>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="benchmarkResults suite-selected-section"
+             data-bind="visible: suites()[selectedSuite()].shouldShow() == 'benchmarks'">
+            <div class=""><a class="" href="#">
+                                                                                                       <span data-bind="text: suites()[selectedSuite()].benchmarkPlatform"
+                                                                                                             class="badge badge-inverse"></span><span
+                    data-bind="text: !suites()[selectedSuite()].benchmarksDone() ? 'RUNNING...': 'COMPLETED', css: suites()[selectedSuite()].benchmarksDone() ? 'badge badge-success' : 'badge badge-warning'"></span>
+            </a>
+            </div>
+            <div data-bind="css: 'collapseBenchmarks'">
+                <div class="results">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>expression</th>
+                            <th>times faster</th>
+                            <th>ops/sec</th>
+                            <th>+/-</th>
+                            <th># analysis cycles</th>
+                            <th># sample cycles</th>
+                            <th>iterations/sample cycle</th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="'foreach':suites()[selectedSuite()].benchmarks">
+                        <tr data-bind="css: fastest() ? 'success' : slowest() ? 'error' : ''">
+                            <td><code class="well help-inline"
+                                      data-bind="text: name"></code></td>
+                            <td><code class="well help-inline" style='display:none;'
+                                      data-bind="text: timesFaster, visible:timesFaster"></code>
+                            </td>
+                            <td><code class="well help-inline" data-bind="text: hz"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: relativateMarginError"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: numAnalysisCycles"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: numSampleCycles"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: iterationPerSampleCycle"></code></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button style="display:none;margin-bottom: 5px;" class='btn btn-large run-again'
+                        data-bind="click:suites()[selectedSuite()].processBenchmarks,visible:suites()[selectedSuite()].benchmarksDone">
+                    RUN AGAIN
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- /ko -->
+</div>
+
 
 <div style="position:absolute; z-index: 9999; top: 3px; right: 3px; padding: 3px !important;">
     <span id="totalPassed" data-bind="text: stats.passes()" class="well badge badge-success headCount"></span>
-    <span id="totalFailed" data-bind="text: stats.failures(), visible: stats.failures() &gt; 0" class="well badge badge-important headCount"></span>
+    <span id="totalFailed" data-bind="text: stats.failures(), visible: stats.failures() &gt; 0"
+          class="well badge badge-important headCount"></span>
 </div>
