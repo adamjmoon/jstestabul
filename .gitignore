@@ -9,5 +9,4 @@ results/*
 */**/*.log
 /*/Gruntfile.js
 /*/coverage.json
-*.js
-*/*.js
+/app/*.js

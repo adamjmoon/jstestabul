@@ -7,12 +7,13 @@
 .main-nav {
     position: fixed;
     top: 45px;
+    left:0;
     width: 0;
     height: 100%;
     overflow-y: auto;
     transition: width .3s ease;
     display:block;
-    z-index: 9999;
+    z-index: 2000;
 }
 
 .main-nav span.badge {
@@ -72,9 +73,7 @@ span.close-menu {
     width:260px;
     text-align: left;
 }
-.brand{
-    font-family:   Menlo,Monaco,Consolas,monospace
-}
+
 
 .open-menu {
     width:260px;

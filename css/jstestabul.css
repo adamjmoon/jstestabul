@@ -1,5 +1,17 @@
 * {
     -webkit-user-select: all !important;
+
+}
+
+body
+{
+    font-family: monospace, sans-serif; !important;
+    font-weight: 200 !important;
+
+}
+
+.brandit {
+    font-family: 'Racing Sans One', cursive !important;
 }
 
 @font-face {
@@ -477,9 +489,7 @@ div.badge-code {
     top: 10px;
 }
 
-html {
-    /*overflow: hidden !important;*/
-}
+
 
 table td[class*='span'], table th[class*='span'], .row-fluid table td[class*='span'], .row-fluid table th[class*='span'] {
     display: table-cell;
@@ -548,3 +558,19 @@ div.code-coffee:before {
 .suite-selected-section{
     margin-top: 35px;
 }
+
+
+/*js2coffee*/
+.version {
+    padding-top: 5px;
+    color: #aaaaaa;
+    font-size: 9pt;
+    position: absolute;
+}
+.version.left {
+    left: 2.5%;
+}
+.version.right {
+    right: 2.5%;
+}
+

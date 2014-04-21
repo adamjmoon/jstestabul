@@ -23,26 +23,26 @@
 </div>
 
 <div id="itchcork" class="well"
-     data-bind="localScroll: {target: '#suite-list'},visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork'"
+     data-bind="visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork'"
      style="display: block !important;">
 
     <div id="suite-list" class="col-md-2 col-sm-3 suite-list" style="position: relative; height: 100%;overflow: auto;"
-         data-bind="'foreach': Object.keys(suites())">
+         data-bind="'foreach': suites">
         <div class="well">
             <div id="suiteDescription" class="col-md-12 suite-div"
-                 data-bind="attr: {'id' : $data},localScroll: {target: '#itchcork'}">
+                 data-bind="attr: {'id' : num}">
 
                 <div class="">
                     <a class=""
-                       data-bind="attr: {'href': '#' + $data}, click: $parent.selectedSuite($data)">
+                       data-bind="attr: {'href': '#' + num}, click: $parent.selectedSuite(num)">
 
-                                            <span data-bind="text: $parent.suites()[$data].suiteDesc()"
+                                            <span data-bind="text:suiteDesc"
                                                   class="label label-info suiteLabel"
                                                   style=""/>
                                                       <span class="badge badge-success count"
-                                                            data-bind="visible: $parent.suites()[$data].passedCount() > 0,text: $parent.suites()[$data].passedCount()"></span>
+                                                            data-bind="visible: passedCount() > 0,text: passedCount()"></span>
                                                       <span class="badge badge-important count"
-                                                            data-bind="visible: $parent.suites()[$data].failedCount() > 0,text: $parent.suites()[$data].failedCount()"></span>
+                                                            data-bind="visible: failedCount() > 0,text: failedCount()"></span>
 
 
                     </a>
@@ -53,43 +53,38 @@
         </div>
 
     </div>
-    <!-- ko if: selectedSuite -->
+    <!-- ko if: suitesReady -->
     <div class="col-md-10 col-sm-9 well suite-selected">
         <div class="well col-md-12" style="position: fixed;margin-top: 5px;">
             <span class="label label-info suiteLabel" data-bind="text: suites()[selectedSuite()].suiteDesc"></span>
-            <div class="" data-bind="click: function (){suites()[selectedSuite()].shouldShow('source');}, css: suites()[selectedSuite()].shouldShow() == 'source' ? 'btn btn-warning' : 'btn' ">
-                <span class="">CODE</span></div>
+
+
+            <a href="#modal-options" class="btn btn-info call-modal"><span class="">CODE</span></a>
+
             <div data-bind="click: function (){suites()[selectedSuite()].shouldShow('properties');}, css: suites()[selectedSuite()].shouldShow() == 'properties' ? 'btn btn-warning' : 'btn' "><span
                     class="">PROPERTIES</span></div>
             <div class=""
-               data-bind="visible: suites()[selectedSuite()].tests().length > 0,click: function (){suites()[selectedSuite()].shouldShow('tests');}, css: suites()[selectedSuite()].shouldShow() == 'tests' ? 'btn btn-warning' : 'btn' "><span
+                 data-bind="visible: suites()[selectedSuite()].tests().length > 0,click: function (){suites()[selectedSuite()].shouldShow('tests');}, css: suites()[selectedSuite()].shouldShow() == 'tests' ? 'btn btn-warning' : 'btn' "><span
                     class="">TESTS</span></div>
             <div class=""
-               data-bind="visible: suites()[selectedSuite()].benchmarkingEnabled(), click: function (){suites()[selectedSuite()].shouldShow('benchmarks');}, css: suites()[selectedSuite()].shouldShow() == 'benchmarks' ? 'btn btn-warning' : 'btn' "><span
+                 data-bind="visible: suites()[selectedSuite()].benchmarkingEnabled(), click: function (){suites()[selectedSuite()].shouldShow('benchmarks');}, css: suites()[selectedSuite()].shouldShow() == 'benchmarks' ? 'btn btn-warning' : 'btn' "><span
                     class="">BENCHMARKS</span></div>
         </div>
 
 
-
         <div class="codeProcessed suite-selected-section">
+            <div class="clearfix">
 
-            <div class="" data-bind="visible: suites()[selectedSuite()].shouldShow() == 'source'">
-                <div class="col-md-6 col-xs-11 sourceCode">
-
-                    <div class="code code-coffee well"
-                         data-bind="html:suites()[selectedSuite()].codeModel.coffeeSourceStr"></div>
-
-                </div>
-                <div class="col-md-6 col-xs-11 sourceCode">
+            </div>
+            <div class="sourceCode suite-selected-section"
+                 data-bind="visible: suites()[selectedSuite()].shouldShow() == 'source'">
 
 
-                    <div class="code code-js well"
-                         data-bind="html:suites()[selectedSuite()].codeModel.jsSourceStr"></div>
-                </div>
             </div>
 
 
-            <div class="properties suite-selected-section" data-bind=" visible: suites()[selectedSuite()].shouldShow() == 'properties'">
+            <div class="properties suite-selected-section"
+                 data-bind=" visible: suites()[selectedSuite()].shouldShow() == 'properties'">
 
                 <div class="" data-bind="'foreach':suites()[selectedSuite()].codeModel.properties">
                     <div class="col-md-11"><label class="label label-info"
@@ -192,9 +187,37 @@
             </div>
         </div>
     </div>
+
+
+    <section class="semantic-content" id="modal-options"
+             tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="false">
+
+        <div class="modal-inner">
+
+            <div class="modal-content">
+
+                <div id="editor-wrapper"
+                     data-bind="js2coffeeEditor: selectedCodeModel">
+                    <div id="editorCoffee" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
+                    <div id="editorJS" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
+                </div>
+                <div id="infobox" style="display: none;">
+                  <div class="infobox-content"></div>
+                  <div class="arrow-wrapper">
+                    <div class="arrow-down"></div>
+                  </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Use Hash-Bang to maintain scroll position when closing modal -->
+        <a href="#" class="modal-close" title="Close this editor"
+           data-dismiss="modal">&times;</a>
+    </section>
     <!-- /ko -->
 </div>
-
 
 <div style="position:absolute; z-index: 9999; top: 3px; right: 3px; padding: 3px !important;">
     <span id="totalPassed" data-bind="text: stats.passes()" class="well badge badge-success headCount"></span>

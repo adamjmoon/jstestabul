@@ -1,18 +1,8 @@
-body {
-    margin: 0;
-    padding: 0;
-}
-
 #editor-wrapper {
-    position: absolute;
-    top: 28px;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    background: white;
-    width: 95%;
-    margin: 0 auto;
-    border: 1px solid #e6e4e0;
+    height: 100%;
+    border-radius: 0px;
+    z-index: 9999;
+    display: block;
 }
 
 #editorCoffee {
@@ -25,20 +15,19 @@ body {
 }
 .editor {
   position: absolute !important;
-  background: white;
   bottom: 0;
-  top: 0;
+  top: 0px;
   margin: 0;
 }
 #infobox {
   position: absolute;
   top: 0;
-  right: 2.5%;
+  right: 50%;
   width: auto;
   z-index: 5;
 }
 .infobox-content {
-  background: #d77d2d;
+  background: red;
   text-align: right;
   padding: 10px;
 }
@@ -50,5 +39,5 @@ body {
   height: 0px;
   border-left: 0px solid transparent;
   border-right: 12px solid transparent;
-  border-top: 17px solid #d77d2d;
+  border-top: 17px solid red;
 }

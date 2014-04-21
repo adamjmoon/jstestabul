@@ -1,0 +1,53 @@
+<!-- A modal with its content -->
+<section class="semantic-content" id="modal-options"
+         tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+
+    <div class="modal-inner">
+        <header>
+            <h2 id="modal-label">Options</h2>
+        </header>
+
+        <div class="modal-content">
+            <div id="editor-wrapper" data-bind="js2coffeeEditor: ">
+                <div id="editorCoffee" class="editor ace_editor ace_nobold ace-monokai ace_dark"
+                     data-bind="html:suites()[selectedSuite()].codeModel.coffeeSourceStr"></div>
+                <div id="editorJS" class="editor ace_editor ace_nobold ace-monokai ace_dark"
+                     data-bind="html:suites()[selectedSuite()].codeModel.jsSourceStr"></div>
+            </div>
+            <div id="infobox" style="display: none;">
+                <div class="infobox-content"></div>
+                <div class="arrow-wrapper">
+                    <div class="arrow-down"></div>
+                </div>
+            </div>
+            <select type="text" name="js2coffee_indent">
+                <option value="  ">2 whitespaces</option>
+                <option value="    ">4 whitespaces</option>
+                <option value="	">1 tab</option>
+            </select> Js2coffee indent
+            <br><input type="checkbox" name="line_numbers"> Show Original Line Numbers (js2coffee)
+
+            <br><input type="checkbox" checked="checked" name="token_highlight"> Highlight Tokens
+
+            <br><input type="checkbox" checked="checked" class="editor" name="ShowInvisibles"> Show
+            Invisibles
+            <br><input type="checkbox" checked="checked" class="editor renderer" name="ShowGutter"> Show
+            Gutter
+            <br><input type="checkbox" class="editor renderer" name="ShowPrintMargin"> Show Print Gutter
+
+            <h3>Shortcuts</h3>
+            <ul>
+                <li><strong>Ctrl + ENTER </strong> - execuate JS code</li>
+                <li><strong>Cmd/Ctrl + Shift + 7 </strong> - (un)comment JS blocks</li>
+                <li><strong>Cmd/Ctrl + L </strong> - jump to line</li>
+            </ul>
+        </div>
+
+        <footer>
+        </footer>
+    </div>
+
+    <!-- Use Hash-Bang to maintain scroll position when closing modal -->
+    <a href="#!" class="modal-close" title="Close this modal"
+       data-dismiss="modal">&times;</a>
+</section>

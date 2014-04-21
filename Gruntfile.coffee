@@ -35,7 +35,7 @@ module.exports = (grunt) ->
 
   # Make task shortcuts
   grunt.registerTask 'default', ['parallel:dev','openBrowser']
-  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','instrument','requirejs','copy:main','copy:specs','coffeeCompile','startUnitTestServer']
+  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','jade','instrument','requirejs','copy:main','copy:specs','coffeeCompile','startUnitTestServer']
   grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:main','copy:specs','coffeeCompile']
 
   console.log grunt.option
@@ -133,6 +133,9 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'kill', ->
     cmd('taskkill /IM node.exe /F', this.async())
+
+  grunt.registerTask 'jade', ->
+    cmd('jade.cmd', this.async())
 
   cmd = (cmd, done) ->
     exec = cp.exec

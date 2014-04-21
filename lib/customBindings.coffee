@@ -9,4 +9,5 @@ define ["./customBindings/drag"
         "./customBindings/swipeLeft"
         "./customBindings/swipeRight"
         "./customBindings/tap",
-        "./customBindings/menu"]
+        "./customBindings/menu",
+        "./customBindings/js2coffeeEditor"]
