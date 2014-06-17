@@ -1,4 +1,4 @@
-<div class="" style="position: fixed;bottom: 10px;right:20px;z-index: 1000; display: none;"
+<div class="" style="position: fixed;bottom: 25px;right:20px;z-index: 1000; display: none;"
      data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
     <a class="btn btn-sm btn-primary" href=""
        data-bind="css: viewSpecs() ? 'active' : '' , click: function(){ viewSpecs(true); viewSrc(false); }">SPECS</a>
@@ -9,10 +9,10 @@
 
 <div id="mochaWrapper" class="mochaWrapper"
      data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">
-    <div class="" style="position:absolute;left:80%;top: 5px;z-index: 1000;">
+    <div class="" style="position:absolute;left:95%;top: -15px;z-index: 1000;">
         <a id="mochaSuiteExpander"
-           class="collapser corkClass"
-           data-bind="click: changeMochaSuitesState(), css: collapseMocha() ? 'expandAll' : 'collapseAll' ">
+           class="collapser"
+           data-bind="visible: !viewSrc(),click: changeMochaSuitesState, css: collapseMocha() ? 'expandAll' : 'collapseAll' ">
             <img id="corkCollapse" class=""
                  data-bind="attr:{'title': collapseMocha() ? 'Expand Suites' : 'Collapse Suites' }"
                  src="/img/menulogo.png" class=""/>
@@ -23,8 +23,7 @@
 </div>
 
 <div id="itchcork" class="well"
-     data-bind="visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork'"
-     style="display: block !important;">
+     data-bind="visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork'">
 
     <div id="suite-list" class="col-md-2 col-sm-3 suite-list" style="position: relative; height: 100%;overflow: auto;"
          data-bind="'foreach': suites">
@@ -34,7 +33,7 @@
 
                 <div class="">
                     <a class=""
-                       data-bind="attr: {'href': '#' + num}, click: $parent.selectedSuite(num)">
+                       data-bind="attr: {'href': '#' + num}, click: function(){$parent.selectedSuite(num);}">
 
                                             <span data-bind="text:suiteDesc"
                                                   class="label label-info suiteLabel"
@@ -56,37 +55,28 @@
     <!-- ko if: suitesReady -->
     <div class="col-md-10 col-sm-9 well suite-selected">
         <div class="well col-md-12" style="position: fixed;margin-top: 5px;">
-            <span class="label label-info suiteLabel" data-bind="text: suites()[selectedSuite()].suiteDesc"></span>
+            <span class="label label-info suiteLabel" data-bind="text: selectedSuiteModel().suiteDesc"></span>
 
 
-            <a href="#modal-options" class="btn btn-info call-modal"><span class="">CODE</span></a>
+            <div data-bind="click: function (){selectedSuiteModel().shouldShow('codeEditor');}, css: selectedSuiteModel().shouldShow() == 'codeEditor' ? 'btn btn-warning' : 'btn' "><span
+                    class="">CODE</span></div>
 
-            <div data-bind="click: function (){suites()[selectedSuite()].shouldShow('properties');}, css: suites()[selectedSuite()].shouldShow() == 'properties' ? 'btn btn-warning' : 'btn' "><span
+            <div data-bind="click: function (){selectedSuiteModel().shouldShow('properties');}, css: selectedSuiteModel().shouldShow() == 'properties' ? 'btn btn-warning' : 'btn' "><span
                     class="">PROPERTIES</span></div>
             <div class=""
-                 data-bind="visible: suites()[selectedSuite()].tests().length > 0,click: function (){suites()[selectedSuite()].shouldShow('tests');}, css: suites()[selectedSuite()].shouldShow() == 'tests' ? 'btn btn-warning' : 'btn' "><span
+                 data-bind="visible: selectedSuiteModel().tests().length > 0,click: function (){selectedSuiteModel().shouldShow('tests');}, css: selectedSuiteModel().shouldShow() == 'tests' ? 'btn btn-warning' : 'btn' "><span
                     class="">TESTS</span></div>
             <div class=""
-                 data-bind="visible: suites()[selectedSuite()].benchmarkingEnabled(), click: function (){suites()[selectedSuite()].shouldShow('benchmarks');}, css: suites()[selectedSuite()].shouldShow() == 'benchmarks' ? 'btn btn-warning' : 'btn' "><span
+                 data-bind="visible: selectedSuiteModel().benchmarkingEnabled(), click: function (){selectedSuiteModel().shouldShow('benchmarks');}, css: selectedSuiteModel().shouldShow() == 'benchmarks' ? 'btn btn-warning' : 'btn' "><span
                     class="">BENCHMARKS</span></div>
         </div>
 
 
-        <div class="codeProcessed suite-selected-section">
-            <div class="clearfix">
-
-            </div>
-            <div class="sourceCode suite-selected-section"
-                 data-bind="visible: suites()[selectedSuite()].shouldShow() == 'source'">
-
-
-            </div>
-
-
+        <div class="codeProcessed suite-selected-section well">
             <div class="properties suite-selected-section"
-                 data-bind=" visible: suites()[selectedSuite()].shouldShow() == 'properties'">
+                 data-bind=" visible: selectedSuiteModel().shouldShow() == 'properties'">
 
-                <div class="" data-bind="'foreach':suites()[selectedSuite()].codeModel.properties">
+                <div class="" data-bind="'foreach':selectedSuiteModel().codeModel.properties">
                     <div class="col-md-11"><label class="label label-info"
                                                   data-bind="text: name"></label></div>
                     <div class="col-md-6 col-xs-11 sourceCode">
@@ -101,8 +91,28 @@
             </div>
         </div>
 
-        <div class="tests suite-selected-section"
-             data-bind="attr: { id: 'TestResults'}, visible: suites()[selectedSuite()].shouldShow() == 'tests'">
+        <div class="codeEditor suite-selected-section" id="codeEditor"
+             data-bind=" visible: selectedSuiteModel().shouldShow() == 'codeEditor'">
+
+
+            <div id="editor-wrapper"
+                 data-bind="js2coffeeEditor: selectedCodeModel">
+                <div id="editorCoffee" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
+                <div id="editorJS" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
+            </div>
+            <div id="infobox" style="display: none;">
+                <div class="infobox-content"></div>
+                <div class="arrow-wrapper">
+                    <div class="arrow-down"></div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="tests suite-selected-section well" style="display: none;"
+             data-bind="attr: { id: 'TestResults'}, visible: unitTestFrameworkManager.getFramework()==='itchcork' && selectedSuiteModel().shouldShow() == 'tests'">
 
             <div data-bind="css: 'collapseResults'">
                 <div class="results" id="itchcorkResults"
@@ -116,7 +126,7 @@
                             <th>typeof</th>
                         </tr>
                         </thead>
-                        <tbody data-bind="'foreach':suites()[selectedSuite()].tests">
+                        <tbody data-bind="'foreach':selectedSuiteModel().tests">
                         <tr data-bind="css: passed ? 'success' : 'error', visible: describe">
                             <td colspan='4'><span class="badge badge-info"
                                                   data-bind="text: describe"></span>
@@ -138,12 +148,12 @@
 
             </div>
         </div>
-        <div class="benchmarkResults suite-selected-section"
-             data-bind="visible: suites()[selectedSuite()].shouldShow() == 'benchmarks'">
+        <div class="benchmarks suite-selected-section" style="display: none;"
+             data-bind="visible: unitTestFrameworkManager.getFramework()==='itchcork' && selectedSuiteModel().shouldShow() == 'benchmarks'">
             <div class=""><a class="" href="#">
-                                                                                                       <span data-bind="text: suites()[selectedSuite()].benchmarkPlatform"
-                                                                                                             class="badge badge-inverse"></span><span
-                    data-bind="text: !suites()[selectedSuite()].benchmarksDone() ? 'RUNNING...': 'COMPLETED', css: suites()[selectedSuite()].benchmarksDone() ? 'badge badge-success' : 'badge badge-warning'"></span>
+                                                                                                              <span data-bind="text: selectedSuiteModel().benchmarkPlatform"
+                                                                                                                    class="badge badge-inverse"></span><span
+                    data-bind="text: !selectedSuiteModel().benchmarksDone() ? 'RUNNING...': 'COMPLETED', css: selectedSuiteModel().benchmarksDone() ? 'badge badge-success' : 'badge badge-warning'"></span>
             </a>
             </div>
             <div data-bind="css: 'collapseBenchmarks'">
@@ -160,7 +170,7 @@
                             <th>iterations/sample cycle</th>
                         </tr>
                         </thead>
-                        <tbody data-bind="'foreach':suites()[selectedSuite()].benchmarks">
+                        <tbody data-bind="'foreach':selectedSuiteModel().benchmarks">
                         <tr data-bind="css: fastest() ? 'success' : slowest() ? 'error' : ''">
                             <td><code class="well help-inline"
                                       data-bind="text: name"></code></td>
@@ -181,7 +191,7 @@
                     </table>
                 </div>
                 <button style="display:none;margin-bottom: 5px;" class='btn btn-large run-again'
-                        data-bind="click:suites()[selectedSuite()].processBenchmarks,visible:suites()[selectedSuite()].benchmarksDone">
+                        data-bind="click:selectedSuiteModel().processBenchmarks,visible:selectedSuiteModel().benchmarksDone">
                     RUN AGAIN
                 </button>
             </div>
@@ -189,33 +199,6 @@
     </div>
 
 
-    <section class="semantic-content" id="modal-options"
-             tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="false">
-
-        <div class="modal-inner">
-
-            <div class="modal-content">
-
-                <div id="editor-wrapper"
-                     data-bind="js2coffeeEditor: selectedCodeModel">
-                    <div id="editorCoffee" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
-                    <div id="editorJS" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
-                </div>
-                <div id="infobox" style="display: none;">
-                  <div class="infobox-content"></div>
-                  <div class="arrow-wrapper">
-                    <div class="arrow-down"></div>
-                  </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Use Hash-Bang to maintain scroll position when closing modal -->
-        <a href="#" class="modal-close" title="Close this editor"
-           data-dismiss="modal">&times;</a>
-    </section>
     <!-- /ko -->
 </div>
 

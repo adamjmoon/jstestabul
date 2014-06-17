@@ -12,8 +12,8 @@ define (require) ->
 
     vm.router = Router.createChildRouter()
     .makeRelative
-        moduleId: relativeModulePath
-        fromParent: true
+      moduleId: relativeModulePath
+      fromParent: true
     .map(routes).buildNavigationModel()
 
     @createdRouters[vm.__moduleId__] = vm.router

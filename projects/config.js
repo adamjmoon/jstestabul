@@ -9,6 +9,8 @@ projects["jsBenchmarks"] = require('./jsBenchmarks/config.coffee');
 
 projects["ToDoApp"] = require('./ToDoApp/config.coffee');
 
-projects.currentProject = "jsBenchmarks";
+projects["spl"] = require('./spl/config.coffee');
+
+projects.currentProject = "spl";
 
 module.exports = projects;

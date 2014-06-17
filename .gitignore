@@ -1,6 +1,6 @@
 /_instrumented/*
 /_src/*
-node_modules/*
+*node_modules*
 specs/*
 results/*
 */coverage/*

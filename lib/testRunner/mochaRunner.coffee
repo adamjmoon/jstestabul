@@ -8,7 +8,28 @@ define [
     ), ->
       this
 
+    startMocha = (mochaDone, ItchCork) ->
+      runner = mocha.run()
+      runner.on "end", ->
+        ItchCork.suiteView.stats.tests runner.total
+        ItchCork.suiteView.stats.passes runner.stats.passes
+        ItchCork.suiteView.stats.failures runner.stats.failures
+        $("#mocha a").attr "href", "#"
+        $("#mocha code").addClass "well"
+        $("#mocha a").click ->
+          tests = Array::slice.call($(this).parent().siblings()[0].children)
+          tests.forEach (test) ->
+            if test.hidden
+              test.hidden = false
+            else
+              test.hidden = true
+            return
+        mochaDone(runner.stats)
+        return
+      return
+
     run = (specs, require, ItchCork,mochaDone) ->
+      debugger
       if window.mochaPhantomJS
         mochaPhantomJS.run()
       else
@@ -16,33 +37,21 @@ define [
         mocha.globals(['jQuery'])
         mocha.setup "bdd"
         mocha.reporter "html"
-        try
-          require specs, ->
-            runner = mocha.run()
-            runner.on "end", ->
-              ItchCork.suiteView.stats.tests runner.total
-              ItchCork.suiteView.stats.passes runner.stats.passes
-              ItchCork.suiteView.stats.failures runner.stats.failures
-              $("#mocha a").attr "href", "#"
-              $("#mocha code").addClass "well"
-              $("#mocha a").click ->
-                tests = Array::slice.call($(this).parent().siblings()[0].children)
-                tests.forEach (test) ->
-                  if test.hidden
-                    test.hidden = false
-                  else
-                    test.hidden = true
-                  return
-
-                return
-
-              mochaDone(runner.stats)
-
-              return
-
+        mochaStarted = false
+        i=0
+        callbackCount=0
+        errorCount=0
+        while i<specs.length
+          j=i
+          require [specs[i]],((spec) ->
+            callbackCount++
+            unless callbackCount isnt specs.length - errorCount
+              startMocha(mochaDone, ItchCork)
             return
-
-        catch ex
-          console.log ex
+          ), (ex) ->
+            errorCount++
+            console.log ex
+            return
+          i++
       return
     return run

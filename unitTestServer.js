@@ -54,7 +54,7 @@ app.get('/specs', function (req, res) {
 
     walkDir(path, function (err, specList) {
         if (err) throw err;
-
+        console.log(specList);  
         var options = { specs: specList, framework: config.framework}
 
         res.send(options);
@@ -160,7 +160,7 @@ function walkDir(dir, done, specs){
                                 results.push(file.replace(originalDir, 'specs'));
                             }
                         } else {
-                            if (file.indexOf('.js') > -1 && file.indexOf('/vendor/') === -1
+                            if (file.indexOf('.js') > -1 && file.indexOf('/vendor/') === -1 && file.indexOf('/OTCore/') === -1
                                 && (file.indexOf('/benchmarks/') === -1)
                                 && (file.indexOf('/specs/') === -1)
                                 && file.indexOf('/logger') === -1

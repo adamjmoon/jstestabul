@@ -1,6 +1,7 @@
 module.exports = (grunt) ->
   spawn = require('child_process').spawn
   fs = require('fs')
+  async = require('async')
   root = __dirname
   test = root + '/'
   specs = test + 'specs/'
@@ -35,8 +36,11 @@ module.exports = (grunt) ->
 
   # Make task shortcuts
   grunt.registerTask 'default', ['parallel:dev','openBrowser']
-  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','jade','instrument','requirejs','copy:main','copy:specs','coffeeCompile','startUnitTestServer']
-  grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:main','copy:specs','coffeeCompile']
+  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','jade','instrument','requirejs','copy:path','copy:specs','coffeeCompile','startUnitTestServer']
+  grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:path','copy:specs','coffeeCompile']
+    
+  isJade = (f) ->
+    return f.indexOf(".jade") is -1
 
   console.log grunt.option
   # Configure Grunt
@@ -68,16 +72,16 @@ module.exports = (grunt) ->
     copy:
       src:
          files: [
-           {expand: true, cwd: config.jsUnderTestPath, flatten: false, src: config.jsUnderTestInclude, dest: '_src'}
+           {expand: true, cwd: config.jsUnderTestPath, flatten: false, src: config.jsUnderTestInclude, dest: '_src', filter: isJade}
 
          ]
       specs:
         files: [
           {expand: true, cwd: config.specsPath, flatten: false, src: ['**'], dest: 'specs'}
         ]
-      main:
+      path:
         files: [
-          {expand: true, cwd: 'projects/'+projects.currentProject, flatten: false, src: ['paths.js'], dest: 'app'}
+          {expand: true, cwd: 'projects/'+projects.currentProject, flatten: false, src: ['paths.js', 'bootstrap.js'], dest: 'app'}
         ]
 
     concat:
@@ -104,13 +108,13 @@ module.exports = (grunt) ->
         tasks: [ { grunt: true, args: ['test','--proj',projects.currentProject] }, { grunt: true, args: ['watch','--proj',projects.currentProject] }]
 
     watch:
-      currentProj:
-        files: [config.specsPath + '**', config.jsUnderTestPath + '**']
-        tasks:['update']
-        options:
-          nospawn: true
-          interrupt: true
-          livereload: testServerWebSocketPort
+#      currentProj:
+#        files: [config.specsPath + '**', config.jsUnderTestPath + '**']
+#        tasks:['update']
+#        options:
+#          nospawn: true
+#          interrupt: true
+#          livereload: testServerWebSocketPort
       coverage:
         files: ['coverage.json']
         tasks: ['makeReport']
@@ -145,7 +149,14 @@ module.exports = (grunt) ->
     execCmd.stderr.pipe process.stderr
 
   grunt.registerTask 'coffeeCompile', ->
-    cmd('coffee.cmd', this.async())
+    coffeeCompileList = []
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./_src')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./specs')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./app')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./lib')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./projects')
+    async.parallel coffeeCompileList, (err) ->
+      console.log err
 
   grunt.registerTask 'coffeeWatch', ->
     script ='coffeeWatch.cmd'

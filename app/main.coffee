@@ -1,14 +1,16 @@
 requirejs.config
+  urlArgs: "bust=" + (new Date()).getTime()
   baseUrl: ""
   paths:
     itchcork: "lib/itchcork"
     text: "lib/require/text"
     durandal: "lib/durandal"
-    plugins: "lib/durandal/plugins"
     transitions: "lib/durandal/transitions"
+    plugins: "lib/durandal/plugins"
     platform: "lib/platform"
     lodash: "lib/lodash"
     benchmark: "lib/benchmark"
+    ace: "lib/ace/ace"
 
-require ["app/start"]
+require ["lib/testRunner/runnerSetup","app/start"]
 

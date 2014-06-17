@@ -7,6 +7,7 @@ body
 {
     font-family: monospace, sans-serif; !important;
     font-weight: 200 !important;
+    overflow: hidden !important;
 
 }
 
@@ -55,7 +56,6 @@ pre {
     line-height: 20px;
     white-space: pre;
     white-space: pre-wrap;
-    background-color: inherit;
     border: 1px solid #ccc;
     border: 1px solid rgba(0, 0, 0, 0.15);
     -webkit-border-radius: 4px;
@@ -75,7 +75,6 @@ pre {
 
 #mocha h1, #mocha h2 {
     margin: 0;
-    color: inherit !important;
 }
 
 #mocha h1 {
@@ -86,7 +85,6 @@ pre {
 
 #mocha h1 a {
     text-decoration: none;
-    color: inherit;
 }
 
 #mocha h1 a:hover {
@@ -183,7 +181,6 @@ pre {
 }
 
 #mocha .test.fail pre {
-    color: inherit;
 }
 
 #mocha .test.fail::before {
@@ -202,7 +199,7 @@ pre {
     background-color: #ccb5b5;
 }
 
-#mocha .test pre {
+#mocha pre {
     display: block !important;
     font: 12px/1.5 monaco, monospace;
     margin: 5px;
@@ -259,14 +256,12 @@ pre {
 }
 
 #mocha-stats em {
-    color: inherit;
     font-style: normal !important;
     line-height: 30px;
 }
 
 #mocha-stats a {
     text-decoration: none;
-    color: inherit;
 }
 
 #mocha-stats a:hover {
@@ -312,13 +307,11 @@ code {
 }
 
 li.suite h1 a {
-    color: inherit;
-    font-size: 16px;
+    font-size: 12px;
     min-height: 10px;
     padding: 7px;
     margin-bottom: 0px;
     margin-left: 10px;
-    background-color: inherit;
     border: 1px solid #000000;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -448,7 +441,7 @@ div.badge-code {
 
 .mochaWrapper {
     position: relative;
-    top: 0;
+    top: 50px;
     right: 0;
     bottom: 0;
     left: 0;
@@ -456,9 +449,7 @@ div.badge-code {
 }
 
 #wrapper {
-    overflow: auto !important;
-    top: 0px;
-    bottom: 0px;
+
 }
 
 #mocha {
@@ -485,8 +476,6 @@ div.badge-code {
 .suite-selected{
     position: relative;
     height: 100%;
-    overflow: auto;
-    top: 10px;
 }
 
 
@@ -517,8 +506,8 @@ div.code-js:before {
     color: #000;
     position: absolute;
     padding: 2px;
-    right: 8px;
-    top: 2px;
+    right: 5px;
+    top: -18px;
     background-color: #99ff9a;
     font-size: 10px;
     line-height: 12px;
@@ -530,8 +519,8 @@ div.code-coffee:before {
     color: #000;
     position: absolute;
     padding: 2px;
-    right: 8px;
-    top: 2px;
+    right: 5px;
+    top: -18px;
     background-color: #ffad7b;
     font-size: 10px;
     line-height: 12px;
@@ -556,7 +545,16 @@ div.code-coffee:before {
 }
 
 .suite-selected-section{
-    margin-top: 35px;
+
+    height: 100%;
+    overflow: auto;
+}
+
+.properties{
+    position: absolute !important;
+    bottom: 0;
+    top: 45px;
+    margin: 0;
 }
 
 
