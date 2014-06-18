@@ -25,9 +25,9 @@
 <div id="itchcork" class="well"
      data-bind="visible: viewSrc() || unitTestFrameworkManager.getFramework()==='itchcork'">
 
-    <div id="suite-list" class="col-md-2 col-sm-3 suite-list" style="position: relative; height: 100%;overflow: auto;"
+    <div id="suite-list" class="col-md-2 suite-list" style="position: relative; height: 100%;"
          data-bind="'foreach': suites">
-        <div class="well">
+        <div class="well" style="overflow: auto;">
             <div id="suiteDescription" class="col-md-12 suite-div"
                  data-bind="attr: {'id' : num}">
 
@@ -53,13 +53,13 @@
 
     </div>
     <!-- ko if: suitesReady -->
-    <div class="col-md-10 col-sm-9 well suite-selected">
+    <div id="suite-selected" class="col-md-10 well suite-selected">
         <div class="well col-md-12" style="position: fixed;margin-top: 5px;">
             <span class="label label-info suiteLabel" data-bind="text: selectedSuiteModel().suiteDesc"></span>
 
 
-            <div data-bind="click: function (){selectedSuiteModel().shouldShow('codeEditor');}, css: selectedSuiteModel().shouldShow() == 'codeEditor' ? 'btn btn-warning' : 'btn' "><span
-                    class="">CODE</span></div>
+            <div data-bind="click: function (){selectedSuiteModel().shouldShow('codeEditor');}, css: selectedSuiteModel().shouldShow() == 'codeEditor' ? 'btn btn-warning' : 'btn' "><span title="CODE"
+                    class=""><i class="fa fa-code"></i></span></div>
 
             <div data-bind="click: function (){selectedSuiteModel().shouldShow('properties');}, css: selectedSuiteModel().shouldShow() == 'properties' ? 'btn btn-warning' : 'btn' "><span
                     class="">PROPERTIES</span></div>
@@ -70,7 +70,6 @@
                  data-bind="visible: selectedSuiteModel().benchmarkingEnabled(), click: function (){selectedSuiteModel().shouldShow('benchmarks');}, css: selectedSuiteModel().shouldShow() == 'benchmarks' ? 'btn btn-warning' : 'btn' "><span
                     class="">BENCHMARKS</span></div>
         </div>
-
 
         <div class="codeProcessed suite-selected-section well">
             <div class="properties suite-selected-section"
@@ -94,9 +93,10 @@
         <div class="codeEditor suite-selected-section" id="codeEditor"
              data-bind=" visible: selectedSuiteModel().shouldShow() == 'codeEditor'">
 
-
+            <div class="btn btn-success" style="position:absolute;top:10px; left: 45%;" data-bind="click: window.editor.saveCoffee"><i class="fa fa-save"></i></div>
             <div id="editor-wrapper"
                  data-bind="js2coffeeEditor: selectedCodeModel">
+
                 <div id="editorCoffee" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
                 <div id="editorJS" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
             </div>

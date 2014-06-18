@@ -88,6 +88,20 @@ app.post('/coverage', function (req, res) {
     });
 });
 
+app.post('/saveModule', function (req, res) {
+    var moduleInfo = JSON.parse(req.body.moduleInfo);
+    var modulePath = config.jsUnderTestPath + moduleInfo.name + moduleInfo.ext;
+
+    fs.writeFile(modulePath, moduleInfo.code, function (err) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(modulePath + " saved!");
+            res.send(200);
+        }
+    });
+});
+
 app.post('/stats', function (req, res) {
     var stats = JSON.parse(req.body.stats);
     var resultsFilePath = __dirname + '/results/' + projects.currentProject + '.json';

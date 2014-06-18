@@ -24,7 +24,8 @@ define (require) ->
           coverage: coverage
       return
 
-    require ["itchcork"],(ItchCork) ->
+    require ["itchcork",'lib/js2coffee/js2coffeeEditor'],(ItchCork, Js2coffeeEditor) ->
+      window.editor = new Js2coffeeEditor()
       require options.pathConfig.bootstrap, ->
         debugger
         if ItchCork.options.framework is "itchcork"
