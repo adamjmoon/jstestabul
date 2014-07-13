@@ -1,13 +1,12 @@
 
 div.loading(data-bind='visible: router.isNavigating') Loading?
-div.navbar.navbar-fixed-top.well
-    div.main-header
-        span#open-menu.open-menu(data-bind='openMenuOnTap')
-            i.fa.fa-bars
-            span.brandit jstestabul
-        span#close-menu.close-menu(data-bind='closeMenuOnTap')
-            i.fa.fa-bars
-            span.brandit jstestabul
+div.main-header
+    span#open-menu.open-menu(data-bind='openMenuOnTap')
+        i.fa.fa-bars
+        span.brandit jstestabul
+    span#close-menu.close-menu(data-bind='closeMenuOnTap')
+        i.fa.fa-bars
+        span.brandit jstestabul
 nav#main-nav.main-nav.menu.well(data-bind='closeMenuOnSwipe')
     div.collapse-inner
         ul.nav.nav-tabs.nav-stacked(data-bind='foreach: router.navigationModel')

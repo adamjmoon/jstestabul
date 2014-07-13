@@ -1,13 +1,13 @@
 define (require) ->
 
   setup = (options) ->
-    paths =
+    @paths =
       hammer: "vendor/hammerjs/jquery.hammer"
       itchcork: "#{options.ref}lib/itchcork"
       text: "#{options.ref}lib/require/text"
-      durandal: "#{options.ref}vendor/durandal"
-      plugins: "#{options.ref}vendor/durandal/plugins"
-      transitions: "#{options.ref}vendor/durandal/transitions"
+      durandal: "#{options.ref}lib/durandal"
+      plugins: "#{options.ref}lib/durandal/plugins"
+      transitions: "#{options.ref}lib/durandal/transitions"
       async: "vendor/requirejs-async/async"
       platform: "#{options.ref}lib/platform"
       lodash: "#{options.ref}lib/lodash"
@@ -16,6 +16,6 @@ define (require) ->
       lib: "#{options.ref}lib"
       specs: "#{options.ref}specs"
       app: "#{options.ref}app"
-    return paths
+    return
 
   return setup

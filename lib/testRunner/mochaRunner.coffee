@@ -29,7 +29,7 @@ define [
       return
 
     run = (specs, require, ItchCork,mochaDone) ->
-      debugger
+
       if window.mochaPhantomJS
         mochaPhantomJS.run()
       else

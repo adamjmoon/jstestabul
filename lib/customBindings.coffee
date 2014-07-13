@@ -10,4 +10,5 @@ define ["./customBindings/drag"
         "./customBindings/swipeRight"
         "./customBindings/tap",
         "./customBindings/menu",
-        "./customBindings/js2coffeeEditor"]
+        "./customBindings/js2coffeeEditor",
+        "./customBindings/typeahead"]

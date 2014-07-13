@@ -3,7 +3,7 @@ var config;
 
 config = {};
 
-config.path = "../jsBenchmarks/";
+config.path = "./lib/itchcork/";
 
 config.jsUnderTestPath = config.path;
 
@@ -11,8 +11,6 @@ config.jsUnderTestInclude = ['**', '!specs/**'];
 
 config.specsPath = config.jsUnderTestPath + "specs/";
 
-config.specNamingConvention = '_spec';
-
-config.framework = "itchcork";
+config.framework = "mocha";
 
 module.exports = config;

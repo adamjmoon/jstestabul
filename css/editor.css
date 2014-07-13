@@ -16,7 +16,7 @@
 .editor {
   position: absolute !important;
   bottom: 0;
-  top: 40px;
+  top: 0;
   margin: 0;
 }
 #infobox {

@@ -10,20 +10,18 @@ module.exports = (grunt) ->
   testServerJs = testServer + 'lib/'
   coverage = testServer + 'coverage/'
   cp = require('child_process')
-  projects = require('./projects/config.coffee')
+
   testServerPath = testServer + 'unitTestServer.js'
   testServerPort = 4050
   testServerUrl = 'localhost:' + testServerPort
   testServerWebSocketPort = 1337
-
+  currentProject = "jsBenchmarks"
 
   console.log grunt.option('proj')
   if typeof grunt.option('proj') isnt "undefined"
-    projects.currentProject = grunt.option('proj')
+    currentProject = grunt.option('proj')
 
-
-  config = projects[projects.currentProject]
-
+  config = require("./projects/#{currentProject}/config.coffee")
   console.log config
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -81,7 +79,7 @@ module.exports = (grunt) ->
         ]
       path:
         files: [
-          {expand: true, cwd: 'projects/'+projects.currentProject, flatten: false, src: ['paths.js', 'bootstrap.js'], dest: 'app'}
+          {expand: true, cwd: 'projects/'+currentProject, flatten: false, src: ['paths.js', 'bootstrap.js'], dest: 'app'}
         ]
 
     concat:
@@ -105,7 +103,7 @@ module.exports = (grunt) ->
       dev:
         options:
           stream: true
-        tasks: [ { grunt: true, args: ['test','--proj',projects.currentProject] }, { grunt: true, args: ['watch','--proj',projects.currentProject] }]
+        tasks: [ { grunt: true, args: ['test','--proj',currentProject] }, { grunt: true, args: ['watch','--proj',currentProject] }]
 
     watch:
 #      currentProj:
@@ -114,7 +112,6 @@ module.exports = (grunt) ->
 #        options:
 #          nospawn: true
 #          interrupt: true
-#          livereload: testServerWebSocketPort
       coverage:
         files: ['coverage.json']
         tasks: ['makeReport']

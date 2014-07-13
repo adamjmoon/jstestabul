@@ -340,9 +340,10 @@ a {
     position: fixed;
     width: 100%;
     left: 0;
+    top: 0;
     transition: all 0.3s ease;
     border-bottom: 3px solid #fff;
-    height: 45px;
+    height: 50px;
     z-index: 1000;
 }
 
@@ -448,10 +449,6 @@ div.badge-code {
     height: 100%;
 }
 
-#wrapper {
-
-}
-
 #mocha {
     position: relative;
     bottom: 45px;
@@ -461,10 +458,11 @@ div.badge-code {
 
 #itchcork {
     position: fixed;
-    top: 45px;
+    top: 50px;
     bottom: 0px;
     left: 0px;
     right: 0px;
+    z-index: 2000;
 }
 
 .suite-list {
@@ -478,9 +476,6 @@ div.badge-code {
     height: 100%;
     width: 100%;
 }
-
-
-
 table td[class*='span'], table th[class*='span'], .row-fluid table td[class*='span'], .row-fluid table th[class*='span'] {
     display: table-cell;
     float: left;
@@ -529,8 +524,11 @@ div.code-coffee:before {
 }
 
 .suite-div {
-    height: 50px;
     padding-top: 5px;
+}
+
+.suite-div .badge{
+    height:30px !important;
 }
 
 .codeProcessed {
@@ -554,7 +552,6 @@ div.code-coffee:before {
 .properties{
     position: absolute !important;
     bottom: 0;
-    top: 45px;
     margin: 0;
 }
 
@@ -572,4 +569,3 @@ div.code-coffee:before {
 .version.right {
     right: 2.5%;
 }
-

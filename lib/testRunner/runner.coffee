@@ -5,7 +5,6 @@ define (require) ->
         baseUrl: "_src"
         paths: options.pathConfig.paths
     else
-      debugger
       requirejs.config
         baseUrl: "_instrumented/_src"
         paths: options.pathConfig.paths
@@ -18,16 +17,16 @@ define (require) ->
         return
       return
     postCoverage = ->
+      debugger
       if window.__coverage__
         coverage = JSON.stringify(window.__coverage__.valueOf())
         $.post "/coverage",
           coverage: coverage
       return
 
-    require ["itchcork",'lib/js2coffee/js2coffeeEditor'],(ItchCork, Js2coffeeEditor) ->
+    require ["itchcork",'lib/js2coffee/js2coffeeEditor','lib/typeahead.bundle.min'],(ItchCork, Js2coffeeEditor) ->
       window.editor = new Js2coffeeEditor()
       require options.pathConfig.bootstrap, ->
-        debugger
         if ItchCork.options.framework is "itchcork"
           ItchCork.suiteView.unitTestFrameworkManager.set "itchcork"
           ItchCork.on.end = ->
@@ -45,11 +44,43 @@ define (require) ->
             i = undefined
             suite = undefined
             $.get "/sourceList", (sourceList) ->
+
+              # setup typeahead input for sourceList
+              bloodHoundOptions =
+                datumTokenizer : (d) ->
+                  Bloodhound.tokenizers.whitespace d.tokens.join("/ ")
+                queryTokenizer : Bloodhound.tokenizers.whitespace
+                limit: 10
+                # `items` is an array defined in "The Basics"
+                local : $.map( sourceList , ( moduleName ) ->
+
+                  {value: moduleName, tokens: moduleName.split("/")}
+                )
+              
+              modules = new Bloodhound(bloodHoundOptions)
+
+              modules.initialize()
+              $( "#bloodhound .typeahead" ).typeahead(
+                  hint : true
+                  highlight : true
+                  minLength : 1
+                ,
+                  name : "modules"
+                  displayKey : "value"
+                  source : modules.ttAdapter()
+              ).on('typeahead:selected', ($e, datum) ->
+                suiteLinkId = "#{datum['value']}"
+                suiteLink = document.getElementById(suiteLinkId)
+                suiteLink.children[0].click() if suiteLink.children
+                return
+              )
               processSrc = (moduleName, require) ->
                 try
                   require [moduleName], (module) ->
-                    if module and !window.__coverage__
-                      return new ItchCork.Suite(moduleName, module)
+                    if !window.__coverage__
+                      suite = new ItchCork.Suite(moduleName, module)
+
+                    return
 
                 catch ex
                   console.log ex
