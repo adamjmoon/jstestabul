@@ -5,7 +5,7 @@
 
 body
 {
-    font-family: monospace, sans-serif; !important;
+    font-family: arial !important;
     font-weight: 200 !important;
     overflow: hidden !important;
 
@@ -13,6 +13,7 @@ body
 
 .brandit {
     font-family: 'Racing Sans One', cursive !important;
+    font-size: 35px;
 }
 
 @font-face {
@@ -412,8 +413,8 @@ div.accordion-heading span {
 }
 
 .iframe {
-    padding: 5px 1px 0px 1px !important;
-    margin-top: 45px;
+    height: 92%;
+    margin-top: 45px !important;
     display: block;
     background-color: #fff;
 }
@@ -456,7 +457,7 @@ div.badge-code {
 }
 
 
-#itchcork {
+.jstestabulView {
     position: fixed;
     top: 50px;
     bottom: 0px;
@@ -537,8 +538,13 @@ div.code-coffee:before {
 
 .suiteLabel {
     text-align: center;
+    font-size: 12px !important;
 }
 
+.selectedLabel{
+    text-align: center;
+    font-size: 28px !important;
+}
 .page-host{
     position:absolute; left: 0; right: 0; bottom: 0; top: 0;
 }

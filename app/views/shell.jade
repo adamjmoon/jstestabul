@@ -1,0 +1,120 @@
+.loading(data-bind='visible: router.isNavigating') Loading?
+.main-header
+  span#open-menu.open-menu(data-bind='openMenuOnTap')
+    i.fa.fa-bars
+    span.brandit jstestabul
+  span#close-menu.close-menu(data-bind='closeMenuOnTap')
+    i.fa.fa-bars
+    span.brandit jstestabul
+nav#main-nav.main-nav.menu.well(data-bind='closeMenuOnSwipe')
+  .collapse-inner
+    ul.nav.nav-tabs.nav-stacked(data-bind='foreach: router.navigationModel')
+      li(data-bind='css: { active: isActive }')
+        a(data-bind='closeMenuOnTap, attr: { href: hash }, html: title')
+    .navbar.navbar-inverse.menu-title
+      span.badge.badge-info Views
+    ul.nav.nav-tabs.nav-stacked
+      li
+        a(href='#', data-bind='closeMenuOnTap') Results
+      li
+        a(href='#code', data-bind='closeMenuOnTap') Code
+      li
+        a(href='#specs', data-bind='closeMenuOnTap') Specs
+      li
+        a(href='#coverage', data-bind='closeMenuOnTap') Coverage
+    .navbar.navbar-inverse.menu-title
+      span.badge.badge-info Theme
+    ul.nav.nav-tabs.nav-stacked
+      li
+        a(href='', data-bind='closeMenuOnTap,click: function(){themeManager.set("curelean");}') Cerulean
+      li
+        a(href='', data-bind='closeMenuOnTap,click: function(){themeManager.set("cosmo");}') Cosmo
+      li
+        a(href='', data-bind='closeMenuOnTap,click: function(){themeManager.set("cyborg");}') Cyborg
+      li
+        a(href='', data-bind='closeMenuOnTap,click: function(){themeManager.set("superhero");}') Superhero
+      li
+        a(href='', data-bind='click: function(){themeManager.set("customTheme");}') Custom
+        ul.nav.nav-tabs.nav-stacked(style='display: none;', data-bind='jscolor,visible: themeManager.customTheme.isActive()')
+          li
+            a(href='', data-bind='click: function(){themeManager.resetCustomTheme();}')
+              .navbar.navbar-inverse.menu-title
+                .navbar-inner
+                  span.badge.badge-info Reset Custom Theme
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Body Font Color
+            input.color(data-bind='value: themeManager.customTheme.bodyFontColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Body Background Color
+            input.color(data-bind='value: themeManager.customTheme.bodyBackgroundColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Body Gradient From Color
+            input.color(data-bind='value: themeManager.customTheme.bodyGradientFromColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Body Gradient To Color
+            input.color(data-bind='value: themeManager.customTheme.bodyGradientToColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Badge Color
+            input.color(data-bind='value: themeManager.customTheme.infoColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Code Color
+            input.color(data-bind='value: themeManager.customTheme.codeColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Code Font Family
+            input(data-bind='value: themeManager.customTheme.codeFontFamily')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Font Size
+            input(data-bind='value: themeManager.customTheme.fontSize')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Hover Color
+            input.color(data-bind='value: themeManager.customTheme.hoverColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Well Background Color
+            input.color(data-bind='value: themeManager.customTheme.wellBackgroundColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Nav & Header Background Color
+            input.color(data-bind='value: themeManager.customTheme.navBackgroundColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Suite Heading Background Color
+            input.color(data-bind='value: themeManager.customTheme.navBarInnerBackgroundColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Inverse Color
+            input.color(data-bind='value: themeManager.customTheme.inverseColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Table Border Color
+            input.color(data-bind='value: themeManager.customTheme.tableBorderColor')
+          li
+            .navbar.navbar-inverse.menu-title
+              .navbar-inner
+                span.badge.badge-info Badge Radius
+            input(data-bind='value: themeManager.customTheme.badgeRadius')
+.page-host.well(data-bind='router: { transition:"entrance", cacheViews:true }')
+

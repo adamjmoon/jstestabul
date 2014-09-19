@@ -3,7 +3,7 @@ var config;
 
 config = {};
 
-config.path = "../SpendOnLife/SpendOnLife/SpendOnLifeWeb/spa/assets/";
+config.path = "../SpendOnLife-Splice/assets/";
 
 config.jsUnderTestPath = config.path + "javascripts/";
 

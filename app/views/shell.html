@@ -6,6 +6,13 @@
     <ul data-bind="foreach: router.navigationModel" class="nav nav-tabs nav-stacked">
       <li data-bind="css: { active: isActive }"><a data-bind="closeMenuOnTap, attr: { href: hash }, html: title"></a></li>
     </ul>
+    <div class="navbar navbar-inverse menu-title"><span class="badge badge-info">Views</span></div>
+    <ul class="nav nav-tabs nav-stacked">
+      <li><a href="#" data-bind="closeMenuOnTap">Results</a></li>
+      <li><a href="#code" data-bind="closeMenuOnTap">Code</a></li>
+      <li><a href="#specs" data-bind="closeMenuOnTap">Specs</a></li>
+      <li><a href="#coverage" data-bind="closeMenuOnTap">Coverage</a></li>
+    </ul>
     <div class="navbar navbar-inverse menu-title"><span class="badge badge-info">Theme</span></div>
     <ul class="nav nav-tabs nav-stacked">
       <li><a href="" data-bind="closeMenuOnTap,click: function(){themeManager.set(&quot;curelean&quot;);}">Cerulean</a></li>
@@ -113,4 +120,4 @@
     </ul>
   </div>
 </nav>
-<div data-bind="router: { transition:'entrance', cacheViews:true }" class="page-host well"></div>
+<div data-bind="router: { transition:&quot;entrance&quot;, cacheViews:true }" class="page-host well"></div>

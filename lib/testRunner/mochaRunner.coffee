@@ -11,9 +11,9 @@ define [
     startMocha = (mochaDone, ItchCork) ->
       runner = mocha.run()
       runner.on "end", ->
-        ItchCork.suiteView.stats.tests runner.total
-        ItchCork.suiteView.stats.passes runner.stats.passes
-        ItchCork.suiteView.stats.failures runner.stats.failures
+        ItchCork.viewModel.stats.tests runner.total
+        ItchCork.viewModel.stats.passes runner.stats.passes
+        ItchCork.viewModel.stats.failures runner.stats.failures
         $("#mocha a").attr "href", "#"
         $("#mocha code").addClass "well"
         $("#mocha a").click ->
@@ -48,10 +48,7 @@ define [
             unless callbackCount isnt specs.length - errorCount
               startMocha(mochaDone, ItchCork)
             return
-          ), (ex) ->
-            errorCount++
-            console.log ex
-            return
+          )
           i++
       return
     return run

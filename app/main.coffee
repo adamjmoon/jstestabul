@@ -1,5 +1,4 @@
 requirejs.config
-  urlArgs: "bust=" + (new Date()).getTime()
   baseUrl: ""
   paths:
     itchcork: "lib/itchcork"
@@ -12,5 +11,9 @@ requirejs.config
     benchmark: "lib/benchmark"
     ace: "lib/ace/ace"
 
-require ["lib/testRunner/runnerSetup","app/start"]
+require ["lib/testRunner/runnerSetup","app/start"], (setup, start) ->
+
+  setup()
+
+  return
 

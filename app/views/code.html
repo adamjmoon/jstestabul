@@ -1,0 +1,67 @@
+<div id="code" class="well jstestabulView">
+
+    <div id="suite-list" class="col-md-2 suite-list" style="position: relative; height: 100%;">
+        <div id="bloodhoundCode" data-bind="typeahead: {list: ItchCork.options.sourceList}" style="position: relative;margin: 10px 0;">
+            <input class="typeahead col-md-12" type="text" placeholder="Search for module ...">
+        </div>
+        <div data-bind="'foreach': m.suites">
+            <div class="well" style="overflow: auto;">
+                <div id="suiteDescription" class="col-md-12 suite-div"
+                     data-bind="attr: {'id' : suiteDesc}">
+
+
+                        <a style="height: 20px;"
+                           data-bind="attr: {'href': '#' + suiteDesc}, click: function(){$parent.m.selectSuite(suiteDesc)}">
+
+                                                        <span data-bind="text:suiteDesc"
+                                                              class="label label-info suiteLabel"
+                                                              style=""/>
+                                                                  <span class="badge badge-success count"
+                                                                        data-bind="visible: passedCount() > 0,text: passedCount()"></span>
+                                                                  <span class="badge badge-important count"
+                                                                        data-bind="visible: failedCount() > 0,text: failedCount()"></span>
+
+
+                        </a>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="suite-selected" class="col-md-10 well suite-selected">
+        <div class="col-md-push-2" style="position: fixed; top: 2px;">
+            <span class="label label-info selectedLabel brandit" data-bind="text: m.selectedSuiteModel().suiteDesc"></span>
+        </div>
+
+        <div class="suite-selected-section" id="codeEditor">
+
+
+            <div class="btn btn-success col-md-push-11" style="position:fixed;top:16px;"
+                 data-bind="click: window.editor.saveCoffee"><i class="fa fa-save"></i></div>
+            <div id="editor-wrapper"
+                 data-bind="js2coffeeEditor: m.selectedCodeModel">
+
+                <div id="editorCoffee" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
+                <div id="editorJS" class="editor ace_editor ace_nobold ace-monokai ace_dark"></div>
+            </div>
+            <div id="infobox" style="display: none;">
+                <div class="infobox-content"></div>
+                <div class="arrow-wrapper">
+                    <div class="arrow-down"></div>
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+</div>
+

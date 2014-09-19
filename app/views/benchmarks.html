@@ -1,0 +1,108 @@
+<!--<div class="" style="position: fixed;bottom: 15px;right:30px;z-index: 3000; display: none;"-->
+     <!--data-bind="visible: unitTestFrameworkManager.getFramework()==='mocha'">-->
+    <!--<a class="btn btn-sm btn-primary" href=""-->
+       <!--data-bind="css: viewSpecs() ? 'active' : '' , click: function(){ viewSpecs(true); viewSrc(false); }">SPECS</a>-->
+    <!--<a class="btn btn-sm btn-primary" href=""-->
+       <!--data-bind="css: viewSrc() ? 'active' : '' , click: function(){ viewSpecs(false); viewSrc(true);}">SOURCE</a>-->
+<!--</div>-->
+
+
+
+<div id="code" class="well">
+
+    <div id="suite-list" class="col-md-2 suite-list" style="position: relative; height: 100%;">
+        <div id="bloodhoundCode" style="position: relative;margin: 10px 0;">
+            <input class="typeahead col-md-12" type="text" placeholder="Search for module ...">
+        </div>
+        <div data-bind="'foreach': m.suites">
+            <div class="well" style="overflow: auto;">
+                <div id="suiteDescription" class="col-md-12 suite-div"
+                     data-bind="attr: {'id' : suiteDesc}">
+
+
+                        <a style="height: 20px;"
+                           data-bind="attr: {'href': '#' + suiteDesc}, click: function(){$parent.selectSuite(suiteDesc)}">
+
+                                                        <span data-bind="text:suiteDesc"
+                                                              class="label label-info suiteLabel"
+                                                              style=""/>
+                                                                  <span class="badge badge-success count"
+                                                                        data-bind="visible: passedCount() > 0,text: passedCount()"></span>
+                                                                  <span class="badge badge-important count"
+                                                                        data-bind="visible: failedCount() > 0,text: failedCount()"></span>
+
+
+                        </a>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- ko if: suitesReady -->
+    <div id="suite-selected" class="col-md-10 well suite-selected">
+        <div class="col-md-push-2" style="position: fixed; top: 5px;">
+            <span class="label label-info suiteLabel" data-bind="text: m.selectedSuiteModel().suiteDesc"></span>
+
+
+
+
+
+        </div>
+        <div class="benchmarks suite-selected-section" style="display: none;"
+             data-bind="visible: unitTestFrameworkManager.getFramework()==='itchcork' && selectedSuiteModel().shouldShow() == 'benchmarks'">
+            <div class=""><a class="" href="#">
+                                                                                                                      <span data-bind="text: selectedSuiteModel().benchmarkPlatform"
+                                                                                                                            class="badge badge-inverse"></span><span
+                    data-bind="text: !selectedSuiteModel().benchmarksDone() ? 'RUNNING...': 'COMPLETED', css: selectedSuiteModel().benchmarksDone() ? 'badge badge-success' : 'badge badge-warning'"></span>
+            </a>
+            </div>
+            <div data-bind="css: 'collapseBenchmarks'">
+                <div class="results">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>expression</th>
+                            <th>times faster</th>
+                            <th>ops/sec</th>
+                            <th>+/-</th>
+                            <th># analysis cycles</th>
+                            <th># sample cycles</th>
+                            <th>iterations/sample cycle</th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="'foreach':selectedSuiteModel().benchmarks">
+                        <tr data-bind="css: fastest() ? 'success' : slowest() ? 'error' : ''">
+                            <td><code class="well help-inline"
+                                      data-bind="text: name"></code></td>
+                            <td><code class="well help-inline" style='display:none;'
+                                      data-bind="text: timesFaster, visible:timesFaster"></code>
+                            </td>
+                            <td><code class="well help-inline" data-bind="text: hz"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: relativateMarginError"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: numAnalysisCycles"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: numSampleCycles"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: iterationPerSampleCycle"></code></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <button style="display:none;margin-bottom: 5px;" class='btn btn-large run-again'
+                        data-bind="click:selectedSuiteModel().processBenchmarks,visible:selectedSuiteModel().benchmarksDone">
+                    RUN AGAIN
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- /ko -->
+</div>
+

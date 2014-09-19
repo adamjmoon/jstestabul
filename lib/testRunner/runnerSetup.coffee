@@ -1,3 +1,4 @@
+
 define 'jquery', ->
   return $
 define 'knockout', ->
@@ -8,15 +9,14 @@ require ['lib/coffeescript'], (CoffeeScript) ->
     return
 
 define (require) ->
-  require ['lib/itchcork/itchcork'], ->
-    require ["lib/sinon","lib/hammer","lib/jquery.scrollTo","lib/jquery.localScroll","lib/customBindings", 'lib/testRunner/mochaRunner'], () ->
-      require ["itchcork"],(ItchCork) ->
 
-        $.get "/specs", (options) ->
-          ItchCork.options = options
-          return
+  setup = (done) ->
 
-        return
+    require ['lib/itchcork/itchcork'], ->
+      require ["lib/sinon","lib/hammer","lib/jquery.scrollTo","lib/jquery.localScroll","lib/customBindings", 'lib/testRunner/mochaRunner'], () ->
+
       return
     return
-  return
+
+
+  return setup

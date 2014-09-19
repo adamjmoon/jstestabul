@@ -1,37 +1,44 @@
 define [ 'lib/typeahead.bundle.min' ] , ->
   ko.bindingHandlers.typeahead =
     init : ( element , valueAccessor , allBindings , viewModel , bindingContext ) ->
-      debugger
-      el = $( element )
+
       options = valueAccessor()
       # constructs the suggestion engine
+      setupTypeAhead(options.list, element.id)
+      return
 
+  setupTypeAhead = (list, id) ->
+    bloodHoundOptions = undefined
+    modules = undefined
+    bloodHoundOptions =
+      datumTokenizer: (d) ->
+        Bloodhound.tokenizers.whitespace d.tokens.join("/ ")
 
-#        ItchCork.on( 'end' , ->
-#
-#          typeAhead = new Bloodhound(
-#          datumTokenizer : Bloodhound.tokenizers.obj.whitespace( "value" )
-#          queryTokenizer : Bloodhound.tokenizers.whitespace
-#           # `items` is an array defined in "The Basics"
-#          local : $.map( options.source , ( item ) ->
-#            value : item[ options.property ]
-#          )
-#
-#          # kicks off the loading/processing of `local` and `prefetch`
-#          typeAhead.initialize()
-#          $( "##{el.Id} .typeahead" ).typeahead
-#            hint : true
-#            highlight : true
-#            minLength : 1
-#          ,
-#            name : if options.name then options.name else ""
-#            displayKey : "value"
-#
-#          # `ttAdapter` wraps the suggestion engine in an adapter that
-#          # is compatible with the typeahead jQuery plugin
-#            source : typeAhead.ttAdapter()
-#        )
+      queryTokenizer: Bloodhound.tokenizers.whitespace
+      limit: 10
+      local: $.map(list, (moduleName) ->
+        value: moduleName
+        tokens: moduleName.split("/")
+      )
 
-#      )
+    modules = new Bloodhound(bloodHoundOptions)
+    modules.initialize()
+    $("#" + id + " .typeahead").typeahead(
+      hint: true
+      highlight: true
+      minLength: 1
+    ,
+      name: "modules"
+      displayKey: "value"
+      source: modules.ttAdapter()
+    ).on "typeahead:selected", ($e, datum) ->
+      suiteLink = undefined
+      suiteLinkId = undefined
+      suiteLinkId = "" + datum["value"]
+      suiteLink = document.getElementById(suiteLinkId)
+      suiteLink.children[0].click()  if suiteLink.children
+      return
+
+    return
 
   return

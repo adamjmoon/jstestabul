@@ -8,29 +8,51 @@ require ['lib/coffeescript','lib/amplify','lib/js2coffee/ace','lib/js2coffee/nar
   require ['lib/itchcork'], ->
     require ['lib/underscore',"lib/sinon","lib/modal","lib/hammer","lib/jquery.scrollTo","lib/jquery.localScroll","lib/customBindings", 'lib/testRunner/mochaRunner'], () ->
       require ["itchcork"],(ItchCork) ->
+        window.ItchCork = ItchCork
+        Function::inherits = (ParentClassOrObject) ->
+          if ParentClassOrObject.constructor is Function
 
-        $.get "/specs", (options) ->
-          ItchCork.options = options
-          require [
-            "durandal/system"
-            "durandal/app"
-            "durandal/viewLocator"], (system, app, viewLocator) ->
+            #Normal Inheritance
+            @:: = new ParentClassOrObject()
+            @::constructor = this
+            @::base = ParentClassOrObject::
+          else
 
-            system.debug false
-            app.title = "jstestabul"
+            #Pure Virtual Inheritance
+            @:: = ParentClassOrObject
+            @::constructor = this
+            @::base = ParentClassOrObject
+          this
 
-            #specify which plugins to install and their configuration
-            app.configurePlugins
-              router: true
+        debugger
+        if !ItchCork.viewModel.processed
+          $.get "/specs", (options) ->
+            ItchCork.options.framework = options.framework
+            ItchCork.options.specs = options.specs
+
+            $.get "/sourceList", (sourceList) ->
+              ItchCork.options.sourceList = sourceList
+              require [
+                "durandal/system"
+                "durandal/app"
+                "durandal/viewLocator"], (system, app, viewLocator) ->
+
+                system.debug false
+                app.title = "jstestabul"
+
+                #specify which plugins to install and their configuration
+                app.configurePlugins
+                  router: true
 
 
-            app.start().then ->
-              #Look for partial views in a 'views' folder in the root.
-              viewLocator.useConvention()
+                app.start().then ->
+                  #Look for partial views in a 'views' folder in the root.
+                  viewLocator.useConvention()
 
-              #Show the app by setting the root view model for our application.
-              app.setRoot "app/shell"
-              return
+                  #Show the app by setting the root view model for our application.
+                  app.setRoot "app/viewModels/shell"
+                  return
+
 
             return
 

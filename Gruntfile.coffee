@@ -33,7 +33,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-requirejs'
 
   # Make task shortcuts
-  grunt.registerTask 'default', ['parallel:dev','openBrowser']
+  grunt.registerTask 'default', ['test']
   grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','jade','instrument','requirejs','copy:path','copy:specs','coffeeCompile','startUnitTestServer']
   grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:path','copy:specs','coffeeCompile']
     
@@ -91,7 +91,7 @@ module.exports = (grunt) ->
       src: ['coverage.json']
       options:
         dir: 'coverage'
-        basePath: 'coverage'
+        basePath: ''
 
     instrument:
       files: ['_src/**/*.js']
@@ -103,15 +103,15 @@ module.exports = (grunt) ->
       dev:
         options:
           stream: true
-        tasks: [ { grunt: true, args: ['test','--proj',currentProject] }, { grunt: true, args: ['watch','--proj',currentProject] }]
+        tasks: [ { grunt: true, args: ['test','--proj',currentProject] }]
 
     watch:
-#      currentProj:
-#        files: [config.specsPath + '**', config.jsUnderTestPath + '**']
-#        tasks:['update']
-#        options:
-#          nospawn: true
-#          interrupt: true
+      currentProj:
+        files: [config.specsPath + '**', config.jsUnderTestPath + '**']
+        tasks:['update']
+        options:
+          nospawn: true
+          interrupt: true
       coverage:
         files: ['coverage.json']
         tasks: ['makeReport']
