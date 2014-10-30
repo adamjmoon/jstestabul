@@ -17,8 +17,10 @@ define [ 'lib/typeahead.bundle.min' ] , ->
       queryTokenizer: Bloodhound.tokenizers.whitespace
       limit: 10
       local: $.map(list, (moduleName) ->
+        tokens = moduleName.split("/")
+        tokens.push moduleName
         value: moduleName
-        tokens: moduleName.split("/")
+        tokens: tokens
       )
 
     modules = new Bloodhound(bloodHoundOptions)
@@ -29,7 +31,7 @@ define [ 'lib/typeahead.bundle.min' ] , ->
       minLength: 1
     ,
       name: "modules"
-      displayKey: "value"
+
       source: modules.ttAdapter()
     ).on "typeahead:selected", ($e, datum) ->
       suiteLink = undefined

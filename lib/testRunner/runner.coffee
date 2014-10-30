@@ -1,7 +1,7 @@
 define (require) ->
   runner = undefined
   runner = (options) ->
-    
+    $.ajaxSetup({ cache: false })
     postCoverage = undefined
     postResults = undefined
     unless options.withCoverage
@@ -63,9 +63,7 @@ define (require) ->
               mochaRunner = require("lib/testRunner/mochaRunner")
               mochaDone = (stats) ->
                 postResults stats
-                debugger
                 ProcessSource ItchCork.options.sourceList, ->
-
                   if options.withCoverage
                     postCoverage()
                   ItchCork.viewModel.processed = true

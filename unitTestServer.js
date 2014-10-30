@@ -54,12 +54,26 @@ app.get('/specs', function (req, res) {
 
     walkDir(path, function (err, specList) {
         if (err) throw err;
-        console.log(specList);  
+        specList = specList.sort();
         var options = { specs: specList, framework: config.framework}
 
         res.send(options);
     }, true);
 });
+
+app.get('/sourceList', function (req, res) {
+    var path = __dirname + '/_src';
+
+    walkDir(path, function (err, sourceList) {
+        if (err) throw err;
+        sourceList = sourceList.sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+        });
+        console.log(sourceList);
+        res.send(sourceList);
+    }, false);
+});
+
 
 
 app.all('/results', function (req, res, next) {
@@ -90,16 +104,26 @@ app.post('/coverage', function (req, res) {
 
 app.post('/saveModule', function (req, res) {
     var moduleInfo = JSON.parse(req.body.moduleInfo);
-    var modulePath = config.jsUnderTestPath + moduleInfo.name + moduleInfo.ext;
+    var modulePath = config.jsRootPath + moduleInfo.name + moduleInfo.ext;
+
 
     fs.writeFile(modulePath, moduleInfo.code, function (err) {
         if (err) {
             console.log(err);
         } else {
             console.log(modulePath + " saved!");
+            if(modulePath.indexOf("specs/") > -1){
+                fs.createReadStream(modulePath).pipe(fs.createWriteStream(__dirname + '/' +  moduleInfo.name + moduleInfo.ext))
+            }
+            else {
+                fs.createReadStream(modulePath).pipe(fs.createWriteStream(__dirname + '/_src/' + moduleInfo.name + moduleInfo.ext))
+            }
+
             res.send(200);
         }
     });
+
+
 });
 
 app.post('/stats', function (req, res) {
@@ -128,16 +152,6 @@ app.post('/stats', function (req, res) {
             res.send(200);
         }
     });
-});
-
-app.get('/sourceList', function (req, res) {
-    var path = __dirname + '/_src';
-
-    walkDir(path, function (err, sourceList) {
-        if (err) throw err;
-        console.log(sourceList);
-        res.send(sourceList);
-    }, false);
 });
 
 function walkDir(dir, done, specs){
@@ -174,18 +188,7 @@ function walkDir(dir, done, specs){
                                 results.push(file.replace(originalDir, 'specs'));
                             }
                         } else {
-                            if (file.indexOf('.js') > -1 && file.indexOf('/vendor/') === -1 && file.indexOf('/OTCore/') === -1
-                                && (file.indexOf('/benchmarks/') === -1)
-                                && (file.indexOf('/specs/') === -1)
-                                && file.indexOf('/logger') === -1
-                                && file.indexOf('/logger') === -1
-                                && file.indexOf('/lib/') === -1
-                                && file.indexOf('/appStart.js') === -1
-                                && file.indexOf('/reload-client.js') === -1
-                                && file.indexOf('/override.js') === -1
-                                && file.indexOf('/main.js') === -1
-                                && file.indexOf('/creditScoresWidgetViewmodel.js') === -1
-                                && file.indexOf('/touchToggle.js') === -1) {
+                            if (file.indexOf('.js') > -1 && file.indexOf('/vendor/') === -1 && file.indexOf('/OTCore/') === -1) {
                                 results.push(file.replace(originalDir + '/', '').replace('.js', ''));
                             }
                         }

@@ -17,12 +17,12 @@ module.exports = (grunt) ->
   testServerWebSocketPort = 1337
   currentProject = "jsBenchmarks"
 
-  console.log grunt.option('proj')
+
   if typeof grunt.option('proj') isnt "undefined"
     currentProject = grunt.option('proj')
 
   config = require("./projects/#{currentProject}/config.coffee")
-  console.log config
+
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-clean'
@@ -34,8 +34,8 @@ module.exports = (grunt) ->
 
   # Make task shortcuts
   grunt.registerTask 'default', ['test']
-  grunt.registerTask 'test', ['clean','copy:src','coffeeCompile','jade','instrument','requirejs','copy:path','copy:specs','coffeeCompile','startUnitTestServer']
-  grunt.registerTask 'update', ['clean','copy:src','coffeeCompile','instrument','copy:path','copy:specs','coffeeCompile']
+  grunt.registerTask 'test', ['clean','copy','coffeeCompile','jade','requirejs','instrument','startUnitTestServer']
+  grunt.registerTask 'update', ['clean','copy','coffeeCompile','instrument']
     
   isJade = (f) ->
     return f.indexOf(".jade") is -1
@@ -70,16 +70,16 @@ module.exports = (grunt) ->
     copy:
       src:
          files: [
-           {expand: true, cwd: config.jsUnderTestPath, flatten: false, src: config.jsUnderTestInclude, dest: '_src', filter: isJade}
+           {expand: true, cwd: config.jsRootPath, flatten: false, src: config.jsUnderTestInclude, dest: '_src', filter: isJade}
 
          ]
       specs:
         files: [
           {expand: true, cwd: config.specsPath, flatten: false, src: ['**'], dest: 'specs'}
         ]
-      path:
+      paths:
         files: [
-          {expand: true, cwd: 'projects/'+currentProject, flatten: false, src: ['paths.js', 'bootstrap.js'], dest: 'app'}
+          {expand: true, cwd: 'projects/'+currentProject, flatten: false, src: ['paths.js'], dest: 'app'}
         ]
 
     concat:
@@ -94,7 +94,7 @@ module.exports = (grunt) ->
         basePath: ''
 
     instrument:
-      files: ['_src/**/*.js']
+      files: config.coverage
       options:
         basePath : '_instrumented'
         flatten: false
@@ -103,22 +103,32 @@ module.exports = (grunt) ->
       dev:
         options:
           stream: true
-        tasks: [ { grunt: true, args: ['test','--proj',currentProject] }]
+        tasks: [ { grunt: true, args: ['test','--proj',currentProject] }, { grunt: true, args: ['watch','--proj',currentProject] }]
 
     watch:
-      currentProj:
-        files: [config.specsPath + '**', config.jsUnderTestPath + '**']
-        tasks:['update']
+      currentProjCode:
+        files: ['_src/**/*.js']
+        tasks:['instrument']
         options:
-          nospawn: true
+          nospawn: false
           interrupt: true
+          livereload: 1337
+      currentProjSpecs:
+        files: ['specs/*.js']
+        options:
+          nospawn: false
+          interrupt: true
+          livereload: 1337
+      itchcork:
+        files: 'libs/itchcork/**'
+        tasks: ['requirejs']
       coverage:
         files: ['coverage.json']
         tasks: ['makeReport']
         options:
-          nospawn: true
+          nospawn: false
           interrupt: true
-          livereload: testServerWebSocketPort
+          livereload: 1337
 
   grunt.registerTask 'startUnitTestServer', ->
     alreadyOn = false
@@ -141,19 +151,20 @@ module.exports = (grunt) ->
   cmd = (cmd, done) ->
     exec = cp.exec
     execCmd = exec(cmd, {}, () ->
-      done())
+      done() if done
+    )
     execCmd.stdout.pipe process.stdout
     execCmd.stderr.pipe process.stderr
 
   grunt.registerTask 'coffeeCompile', ->
     coffeeCompileList = []
-    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./_src')
-    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./specs')
-    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./app')
-    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./lib')
-    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee.cmd --bare --compile -w ./projects')
-    async.parallel coffeeCompileList, (err) ->
-      console.log err
+
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee --bare --compile -w ./_src')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee --bare --compile -w ./specs')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee --bare --compile -w ./app')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee --bare --compile -w ./lib')
+    coffeeCompileList.push async.apply(cmd, 'node_modules\\.bin\\coffee --bare --compile -w ./projects')
+    async.parallel coffeeCompileList
 
   grunt.registerTask 'coffeeWatch', ->
     script ='coffeeWatch.cmd'

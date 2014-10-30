@@ -395,14 +395,7 @@ span.headCount {
     cursor: auto !important;
 }
 
-input {
-    margin-right: 1px;
-    width: 100%;
-    border: 0px !important;
-    border-top: dotted 1px !important;
-    border-bottom: dotted 1px !important;
-    height: 30px;
-}
+
 
 div.accordion-heading span {
     margin-left: 10px;
@@ -575,3 +568,36 @@ div.code-coffee:before {
 .version.right {
     right: 2.5%;
 }
+
+::-webkit-input-placeholder {
+   color: #fff;
+}
+
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #fff;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #fff;
+}
+
+:-ms-input-placeholder {
+   color: #fff;
+}
+
+.wrapper { position: relative; }
+
+i.fa-search { position: absolute;
+    top: 4px;
+    left: 5px;
+    color: #fff;
+    z-index: 9000;
+    margin-right: 100px;}
+
+input.typeahead:focus {
+    outline: 0 !important;
+    -moz-outline-style: none !important;
+    -moz-appearance: none; -webkit-appearance: none;
+}
+

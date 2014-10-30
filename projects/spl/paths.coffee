@@ -4,7 +4,7 @@ define ->
     @paths =
       'knockout.validation': "#{options.ref}lib/knockout.validation",
       'knockout.viewmodel': "#{options.ref}lib/knockout.viewmodel",
-      enrollModel: 'common/models/enrollModel'
+      enrollModel: "#{options.ref}/_src/common/models/enrollModel"
       transitions: "#{options.ref}lib/durandal/transitions"
       lib: "#{options.ref}lib"
       specs: "#{options.ref}specs"

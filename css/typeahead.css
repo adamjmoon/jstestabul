@@ -1,10 +1,8 @@
 .typeahead,
 .tt-query,
 .tt-hint {
-    width: 100% !important;
-    height: 30px !important;
-    font-size: 20px !important;
-    line-height: 30px !important;
+    font-size: 25px !important;
+    line-height: 42px;
     border: 2px solid #ccc !important;
     -webkit-border-radius: 8px;
     -moz-border-radius: 8px;
@@ -14,7 +12,7 @@
 
 .typeahead {
 
-    background-color: #fff !important;
+
 }
 
 .twitter-typeahead{
@@ -32,7 +30,7 @@
 }
 
 .tt-hint {
-    color: #999
+    color: #fff
 }
 
 .tt-dropdown-menu {

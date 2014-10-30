@@ -3,7 +3,7 @@ define 'jquery', ->
 define 'knockout', ->
   return ko
 
-require ['lib/coffeescript','lib/amplify','lib/js2coffee/ace','lib/js2coffee/narcissus_packed'], (CoffeeScript) ->
+require ['lib/coffeescript','lib/amplify','lib/ace/ace','lib/js2coffee/narcissus_packed'], (CoffeeScript) ->
   window.CoffeeScript = CoffeeScript
   require ['lib/itchcork'], ->
     require ['lib/underscore',"lib/sinon","lib/modal","lib/hammer","lib/jquery.scrollTo","lib/jquery.localScroll","lib/customBindings", 'lib/testRunner/mochaRunner'], () ->
@@ -24,7 +24,7 @@ require ['lib/coffeescript','lib/amplify','lib/js2coffee/ace','lib/js2coffee/nar
             @::base = ParentClassOrObject
           this
 
-        debugger
+
         if !ItchCork.viewModel.processed
           $.get "/specs", (options) ->
             ItchCork.options.framework = options.framework

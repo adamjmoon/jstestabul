@@ -1,4 +1,4 @@
-define ["plugins/router",'lib/ThemeManager',"app/viewModels/results","app/viewModels/specs","app/viewModels/code", "app/viewModels/coverage", "app/viewModels/benchmarks"], (router,ThemeManager) ->
+define ["plugins/router",'lib/ThemeManager',"app/viewModels/results","app/viewModels/specs","app/viewModels/code","app/viewModels/coverage"], (router,ThemeManager) ->
   router: router
   activate: ->
     router.map([

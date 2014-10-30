@@ -1,33 +1,36 @@
-<div>
-    <div id="mochaWrapper" class="mochaWrapper"
-         data-bind="visible: m.unitTestFrameworkManager.getFramework()==='mocha'">
-        <div class="" style="position:absolute;left:95%;top: -85px;z-index: 1000;">
-            <a id="mochaSuiteExpander"
-               class="collapser"
-               data-bind="visible: !m.viewSrc(),click: m.changeMochaSuitesState, css: m.collapseMocha() ? 'expandAll' : 'collapseAll' ">
-                <img id="corkCollapse" class=""
-                     data-bind="attr:{'title': m.collapseMocha() ? 'Expand Suites' : 'Collapse Suites' }"
-                     src="/img/menulogo.png" class=""/>
-            </a>
-        </div>
-        <div id="mocha" class="col-md-12 well"
-             style="height:100%;overflow: auto !important;margin-top: 34px;"></div>
+<div style="position:absolute; z-index: 9999; top: 3px; right: 3px; padding: 3px !important;"><span id="totalPassed"
+                                                                                                    data-bind="text: m.stats.passes"
+                                                                                                    class="well badge badge-success headCount"></span><span
+        id="totalFailed" data-bind="text: m.stats.failures" class="well badge badge-important headCount"></span></div>
+<div id="mochaWrapper" class="mochaWrapper"
+     data-bind="visible: m.unitTestFrameworkManager.getFramework()==='mocha'">
+    <div class="" style="position:absolute;left:48%;top: -85px;z-index: 1000;">
+        <a id="mochaSuiteExpander"
+           class="collapser"
+           data-bind="visible: !m.viewSrc(),click: m.changeMochaSuitesState, css: m.collapseMocha() ? 'expandAll' : 'collapseAll' ">
+            <img id="corkCollapse"
+                 data-bind="attr:{'title': m.collapseMocha() ? 'Expand Suites' : 'Collapse Suites' }"
+                 src="/img/menulogo.png" />
+        </a>
     </div>
+    <div id="mocha" class="col-md-12 well"
+         style="height:100%;overflow: auto !important;margin-top: 34px;"></div>
+</div>
 
-    <div id="" class="well jstestabulView" data-bind="visible: m.unitTestFrameworkManager.getFramework()==='itchcork'">
+<div id="" class="well jstestabulView" data-bind="visible: m.unitTestFrameworkManager.getFramework()==='itchcork'">
 
-        <div id="suite-list" class="col-md-2 suite-list" style="position: relative; height: 100%;">
-            <div id="bloodhound" style="position: relative;margin: 10px 0;">
-                <input class="typeahead col-md-12" type="text" placeholder="Search for module ...">
-            </div>
-            <div data-bind="'foreach': m.suites">
-                <div class="well" style="overflow: auto;">
-                    <div id="suiteDescription" class="col-md-12 suite-div"
-                         data-bind="attr: {'id' : suiteDesc}">
+    <div id="suite-list" class="col-md-2 suite-list" style="position: relative; height: 100%;">
+        <div id="bloodhound" style="position: relative;margin: 10px 0;">
+            <input class="typeahead col-md-12" type="text" placeholder="Search for module ...">
+        </div>
+        <div data-bind="'foreach': m.suites">
+            <div class="well" style="overflow: auto;">
+                <div id="suiteDescription" class="col-md-12 suite-div"
+                     data-bind="attr: {'id' : suiteDesc}">
 
 
-                        <a style="height: 20px;"
-                           data-bind="attr: {'href': '#' + suiteDesc}, click: function(){$parent.selectSuite(suiteDesc)}">
+                    <a style="height: 20px;"
+                       data-bind="attr: {'href': '#' + suiteDesc}, click: function(){$parent.selectSuite(suiteDesc)}">
 
                                                             <span data-bind="text:suiteDesc"
                                                                   class="label label-info suiteLabel"
@@ -38,67 +41,61 @@
                                                                             data-bind="visible: failedCount() > 0,text: failedCount()"></span>
 
 
-                        </a>
+                    </a>
 
-
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-        <!-- ko if: m.suitesReady -->
-        <div id="suite-selected" class="col-md-10 well suite-selected">
-            <div class="col-md-push-2" style="position: fixed; top: 5px;">
-                <span class="label label-info suiteLabel" data-bind="text: m.selectedSuiteModel().suiteDesc"></span>
-
-
-            </div>
-
-
-            <div class="tests suite-selected-section well" style="display: none;"
-                 data-bind="attr: { id: 'TestResults'}, visible: m.unitTestFrameworkManager.getFramework()==='itchcork'">
-
-                <div data-bind="css: 'collapseResults'">
-                    <div class="results" id="itchcorkResults">
-                        <table class="table" id="results">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>should.equal</th>
-                                <th>actual</th>
-                                <th>typeof</th>
-                            </tr>
-                            </thead>
-                            <tbody data-bind="'foreach':m.selectedSuiteModel().tests">
-                            <tr data-bind="css: passed ? 'success' : 'error', visible: describe">
-                                <td colspan='4'><span class="badge badge-info"
-                                                      data-bind="text: describe"></span>
-                                </td>
-                            </tr>
-                            <tr data-bind="css: passed ? 'success' : 'error'">
-                                <td><code class="well help-inline"
-                                          data-bind="text: expression"></code></td>
-                                <td><code class="well help-inline"
-                                          data-bind="text: shouldEqual"></code></td>
-                                <td><code class="well help-inline" data-bind="text: actual"></code>
-                                </td>
-                                <td><code class="well help-inline" data-bind="text: typeOf"></code>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
 
                 </div>
             </div>
         </div>
 
-        <!-- /ko -->
+
+    </div>
+    <!-- ko if: m.suitesReady -->
+    <div id="suite-selected" class="col-md-10 well suite-selected">
+        <div class="col-md-push-2" style="position: fixed; top: 5px;">
+            <span class="label label-info suiteLabel" data-bind="text: m.selectedSuiteModel().suiteDesc"></span>
+
+
+        </div>
+
+
+        <div class="tests suite-selected-section well" style="display: none;"
+             data-bind="attr: { id: 'TestResults'}, visible: m.unitTestFrameworkManager.getFramework()==='itchcork'">
+
+            <div data-bind="css: 'collapseResults'">
+                <div class="results" id="itchcorkResults">
+                    <table class="table" id="results">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>should.equal</th>
+                            <th>actual</th>
+                            <th>typeof</th>
+                        </tr>
+                        </thead>
+                        <tbody data-bind="'foreach':m.selectedSuiteModel().tests">
+                        <tr data-bind="css: passed ? 'success' : 'error', visible: describe">
+                            <td colspan='4'><span class="badge badge-info"
+                                                  data-bind="text: describe"></span>
+                            </td>
+                        </tr>
+                        <tr data-bind="css: passed ? 'success' : 'error'">
+                            <td><code class="well help-inline"
+                                      data-bind="text: expression"></code></td>
+                            <td><code class="well help-inline"
+                                      data-bind="text: shouldEqual"></code></td>
+                            <td><code class="well help-inline" data-bind="text: actual"></code>
+                            </td>
+                            <td><code class="well help-inline" data-bind="text: typeOf"></code>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <div style="position:absolute; z-index: 9999; top: 3px; right: 3px; padding: 3px !important;"><span id="totalPassed"
-                                                                                                        data-bind="text: m.stats.passes"
-                                                                                                        class="well badge badge-success headCount"></span><span
-            id="totalFailed" data-bind="text: m.stats.failures" class="well badge badge-important headCount"></span></div>
+    <!-- /ko -->
 </div>

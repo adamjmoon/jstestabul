@@ -1,27 +1,27 @@
+<div style="position:absolute; z-index: 9999; top: 3px; right: 3px; padding: 3px !important;"><span id="totalPassed"
+                                                                                                    data-bind="text: m.stats.passes"
+                                                                                                    class="well badge badge-success headCount"></span><span
+        id="totalFailed" data-bind="text: m.stats.failures" class="well badge badge-important headCount"></span></div>
 <div id="specs" class="well jstestabulView">
 
-    <div id="suite-list" class="col-md-2 suite-list" style="position: relative; height: 100%;">
-        <div id="bloodhoundSpecs" data-bind="typeahead: {list: ItchCork.options.specs}" style="position: relative;margin: 10px 0;">
-            <input class="typeahead col-md-12" type="text" placeholder="Search for module ...">
-        </div>
+    <div id="suite-list" class="col-md-3 suite-list" style="position: relative; height: 100%;">
+        <button class="btn btn-success"
+                data-bind="click: m.createNewSpecModule"><i class="fa fa-plus-square"></i></button>
+        <div class="btn btn-success"
+             data-bind="click: window.editor.saveCoffee"><i class="fa fa-save"></i></div>
         <div data-bind="'foreach': m.specs">
             <div class="well" style="overflow: auto;">
                 <div id="suiteDescription" class="col-md-12 suite-div"
                      data-bind="attr: {'id' : moduleName}">
 
 
-                        <a style="height: 20px;"
-                           data-bind="attr: {'href': '#' + moduleName}, click: function(){$parent.m.selectSpecModel(moduleName)}">
+                    <a style="height: 20px;"
+                       data-bind="attr: {'href': '#' + moduleName}, click: function(){$parent.m.selectSpecModel(moduleName)}">
 
                                                         <span data-bind="text:moduleName"
                                                               class="label label-info suiteLabel"
                                                               style=""/>
-
-
-                        </a>
-
-
-
+                    </a>
                 </div>
             </div>
         </div>
@@ -29,16 +29,20 @@
 
     </div>
 
-    <div id="suite-selected" class="col-md-10 well suite-selected">
-        <div class="col-md-push-2" style="position: fixed; top: 2px;">
-            <span class="label label-info selectedLabel brandit" data-bind="text: m.selectedSpecModel().moduleName"></span>
+    <div id="suite-selected" class="col-md-9 well suite-selected">
+        <div class="col-md-push-3" style="position: fixed; top: 0px;">
+            <input type="text" class="typeahead moduleName brandit"
+                   data-bind="value: m.selectedSpecModel().moduleName,attr: {'size': m.selectedSpecModel().moduleName().length}">
 
+            <div id="bloodhoundSpecs" data-bind="typeahead: {list: ItchCork.options.specs}">
+
+
+                <input class="typeahead col-md-12" type="text" placeholder="Search for module ...">
+            </div>
         </div>
 
-        <div class="codeEditor suite-selected-section" id="codeEditor">
+        <div class="codeEditor suite-selected-section" id="codeEditorSpecs">
 
-            <div class="btn btn-success col-md-push-11" style="position:fixed;top:16px;"
-                 data-bind="click: window.editor.saveCoffee"><i class="fa fa-save"></i></div>
             <div id="editor-wrapper"
                  data-bind="js2coffeeEditor: m.selectedSpecModel">
 
@@ -56,10 +60,7 @@
         </div>
 
 
-
-
     </div>
-
 
 
 </div>

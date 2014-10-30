@@ -9,7 +9,7 @@ requirejs.config
     platform: "lib/platform"
     lodash: "lib/lodash"
     benchmark: "lib/benchmark"
-    ace: "lib/ace/ace"
+    ace: "../lib/ace"
 
 require ["lib/testRunner/runnerSetup","app/start"], (setup, start) ->
 
