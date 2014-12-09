@@ -1,4 +1,4 @@
-jsTestabul
+jstestabul
 ========
 
 Tool for running Javascript UnitTests with Istanbul Code Coverage Report for any Project
