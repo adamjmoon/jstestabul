@@ -23,6 +23,10 @@ module.exports = (grunt) ->
 
   config = require("./projects/#{currentProject}/config.coffee")
 
+  config.currentProject = currentProject
+
+  fs.writeFile("config.json", JSON.stringify(config,null,4))
+
 
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-clean'

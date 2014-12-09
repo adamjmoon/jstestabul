@@ -332,8 +332,25 @@
     .ace_static_highlight {
         font-size: 12px !important;
     }
-
+    .main-header{
+        height: 40px;
+    }
+    input.typeahead{
+       width: 170px;
+    }
+    .brandit, .typeahead, .moduleName {
+        font-size: 24px !important;
+        font-weight: normal !important;
+        height: 30px !important;
+    }
+    input.selectedModule{
+        width: auto !important;
+    }
     .suiteLabel {
+    }
+
+    .jstestabulView, .main-nav{
+        top:40px;
     }
 
     .col-md-1,

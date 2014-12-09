@@ -3,9 +3,7 @@ var express = require('express')
     , fs = require('fs')
     , path = require('path')
     , growl = require('growl')
-    , projects = require('./projects/config')
-    , config = projects[projects.currentProject];
-
+    , config = require('./config.json')
 
 var app = module.exports = express();
 
@@ -69,7 +67,6 @@ app.get('/sourceList', function (req, res) {
         sourceList = sourceList.sort(function (a, b) {
             return a.toLowerCase().localeCompare(b.toLowerCase());
         });
-        console.log(sourceList);
         res.send(sourceList);
     }, false);
 });
@@ -128,7 +125,7 @@ app.post('/saveModule', function (req, res) {
 
 app.post('/stats', function (req, res) {
     var stats = JSON.parse(req.body.stats);
-    var resultsFilePath = __dirname + '/results/' + projects.currentProject + '.json';
+    var resultsFilePath = __dirname + '/results/' + config.currentProject + '.json';
     if (typeof(growl) != "undefined") {
         if (stats.failures > 0) {
             growl(stats.failures + ' of ' + stats.tests + ' tests failed', {

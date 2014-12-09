@@ -16,7 +16,7 @@ define (require )->
     return
 
   processSrc = (sourceList, done) ->
-
+    
     $("input").on "keydown", (evt) ->
       $this = $(this)
       size = parseInt($this.attr("size"))
