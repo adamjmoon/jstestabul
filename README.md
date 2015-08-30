@@ -1,4 +1,4 @@
-jsTestabul
+jstestabul
 ========
 
 Tool for running Javascript UnitTests with Istanbul Code Coverage Report for any Project
@@ -10,9 +10,9 @@ Features
 * creates Node Web that allows to view Test Results with Tab for [Istanbul](http://gotwarlost.github.io/istanbul/) Code Coverage Report
 * external project file watching with Live Reload for Node Test Results Web
 
-Setup jsTestabul
+Setup jstestabul
 -------------------
-* cd Utils/jsTestabul
+* cd jstestabul
 * Run `npm install`
 
 
