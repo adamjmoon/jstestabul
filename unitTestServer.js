@@ -67,15 +67,15 @@ app.get('/sourceList', function (req, res) {
         sourceList = sourceList.sort(function (a, b) {
             return a.toLowerCase().localeCompare(b.toLowerCase());
         });
-        res.send(sourceList);
+
+        res.send({ sourceList: sourceList, sourceExt: config.codeExt});
     }, false);
 });
 
 
-
 app.all('/results', function (req, res, next) {
     res.header('Access-Control-Allow-Origin', "*");
-    res.header('Access-Control-Allow-Methods', 'POST,OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     next();
@@ -99,18 +99,49 @@ app.post('/coverage', function (req, res) {
     });
 });
 
+app.get('/absolute', function (req, res) {
+
+    console.log(req.query);
+    var moduleInfo = req.query;
+    var modulePath = config.jsRootPath + moduleInfo.name + moduleInfo.ext;
+    console.log(modulePath);
+    fs.readFile(modulePath,{}, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var src = data.toString();
+            res.end(src);
+        }
+    });
+});
+
+app.get('/absoluteJS', function (req, res) {
+    console.log(req);
+    var moduleInfo = req.query;
+    var modulePath = config.jsRootPath + moduleInfo.name + ".js";
+
+    fs.readFile(modulePath,{}, function (err, data) {
+        if (err) {
+            console.log(err);
+        } else {
+            var src = data.toString();
+            res.setHeader('content-type', 'text/javascript');
+            res.end(src);
+        }
+    });
+});
+
 app.post('/saveModule', function (req, res) {
     var moduleInfo = JSON.parse(req.body.moduleInfo);
-    var modulePath = config.jsRootPath + moduleInfo.name + moduleInfo.ext;
-
+    var modulePath = moduleInfo.type === 'spec' ? config.specsPath + moduleInfo.name.replace('specs/', '') + moduleInfo.ext : config.jsRootPath + moduleInfo.name + moduleInfo.ext;
 
     fs.writeFile(modulePath, moduleInfo.code, function (err) {
         if (err) {
             console.log(err);
         } else {
             console.log(modulePath + " saved!");
-            if(modulePath.indexOf("specs/") > -1){
-                fs.createReadStream(modulePath).pipe(fs.createWriteStream(__dirname + '/' +  moduleInfo.name + moduleInfo.ext))
+            if (moduleInfo.type === "spec") {
+                fs.createReadStream(modulePath).pipe(fs.createWriteStream(__dirname + '/' + moduleInfo.name + moduleInfo.ext))
             }
             else {
                 fs.createReadStream(modulePath).pipe(fs.createWriteStream(__dirname + '/_src/' + moduleInfo.name + moduleInfo.ext))
@@ -151,11 +182,11 @@ app.post('/stats', function (req, res) {
     });
 });
 
-function walkDir(dir, done, specs){
+function walkDir(dir, done, specs) {
     var originalDir = '';
     var specsOnly = false;
 
-   function walk(dir, done, specs) {
+    function walk(dir, done, specs) {
 
         if (specs) {
             specsOnly = true;
@@ -178,14 +209,14 @@ function walkDir(dir, done, specs){
                         walk(file, function (err, res) {
                             results = results.concat(res);
                             next();
-                        },specsOnly);
+                        }, specsOnly);
                     } else {
                         if (specsOnly) {
-                            if (file.indexOf('_spec.js') > -1) {
+                            if (file.indexOf(config.specsExt + '.js') > -1) {
                                 results.push(file.replace(originalDir, 'specs'));
                             }
                         } else {
-                            if (file.indexOf('.js') > -1 && file.indexOf('/vendor/') === -1 && file.indexOf('/OTCore/') === -1) {
+                            if (file.indexOf('.js') > -1 && file.indexOf('/vendor/') === -1) {
                                 results.push(file.replace(originalDir + '/', '').replace('.js', ''));
                             }
                         }
@@ -196,7 +227,7 @@ function walkDir(dir, done, specs){
             })();
         });
     };
-    walk(dir,done,specs);
+    walk(dir, done, specs);
 }
 
 

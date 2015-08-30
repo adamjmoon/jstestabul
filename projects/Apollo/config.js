@@ -5,16 +5,20 @@ config = {};
 
 config.path = "../Apollo/Client/src/";
 
-config.jsRootPath = config.path + "scripts/";
+config.jsRootPath = config.path;
 
 config.jsUnderTestPath = config.jsRootPath;
 
-config.jsUnderTestInclude = ['**'];
+config.jsUnderTestInclude = ['**', '!specs/*', '!**/*.less'];
 
-config.specsPath = config.path + "specs/";
+config.specsPath = "../Apollo/Client/test/unit";
+
+config.specsExt = ".spec";
 
 config.coverage = ["_src/**/*.js"];
 
 config.framework = "mocha";
+
+config.codeExt = ".js";
 
 module.exports = config;

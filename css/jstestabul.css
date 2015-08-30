@@ -131,7 +131,6 @@ pre {
 }
 
 #mocha .test.pass::before {
-    content: '???';
     font-size: 12px;
     display: block;
     float: left;
@@ -587,8 +586,10 @@ div.code-coffee:before {
 
 .wrapper { position: relative; }
 
-i.fa-search { position: absolute;
-    top: 4px;
+i.fa-search {
+    position: absolute;
+    font-size: 30px !important;
+    top: 5px;
     left: 5px;
     color: #fff;
     z-index: 9000;

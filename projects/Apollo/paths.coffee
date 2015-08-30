@@ -8,9 +8,12 @@ define ->
       transitions: "#{options.ref}lib/durandal/transitions"
       lib: "#{options.ref}lib"
       specs: "#{options.ref}specs"
-      app: "#{options.ref}app"
+      'app/views': "#{options.ref}app/views"
 
-    @bootstrap = []
+
+
+    @bootstrap = ['lib/angular/lib']
+    @testFrameworkDependencies = ['lib/angular/angular-mocks','lib/angular/angular-scenario']
     return
 
   return setup

@@ -5,13 +5,21 @@ define(function() {
     this.paths = {
       'knockout.validation': "" + options.ref + "lib/knockout.validation",
       'knockout.viewmodel': "" + options.ref + "lib/knockout.viewmodel",
-      enrollModel: "" + options.ref + "/_src/common/models/enrollModel",
+      clientEnrollModel: "" + options.ref + "/_src/common/models/clientEnrollModel",
       transitions: "" + options.ref + "lib/durandal/transitions",
       lib: "" + options.ref + "lib",
       specs: "" + options.ref + "specs",
-      app: "" + options.ref + "app"
+      app: "" + options.ref + "app",
+      absolute: "absolute/?m="
     };
     this.bootstrap = ["knockout.validation", "knockout.viewmodel"];
+    this.mock = function() {
+      define('pathPlugins', function() {});
+      define('pathConfig', function() {});
+      define('text!index.html', function() {
+        return '';
+      });
+    };
   };
   return setup;
 });

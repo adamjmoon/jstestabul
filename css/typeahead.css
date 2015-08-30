@@ -44,6 +44,7 @@
     -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
     -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
     box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    width: 200%;
     z-index: 9000;
 }
 
@@ -56,6 +57,12 @@
 .tt-suggestion.tt-cursor {
     color: #fff;
     background-color: #0097cf;
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+    -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, .2);
 
 }
 

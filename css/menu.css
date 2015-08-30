@@ -6,7 +6,7 @@
 
 .main-nav {
     position: fixed;
-    top: 45px;
+    top: 50px;
     left:0;
     width: 0;
     height: 100%;
@@ -16,13 +16,13 @@
     z-index: 3000;
 }
 
-.main-nav span.badge {
-    left: 5px;
-    top: 3px;
-    margin-bottom: 4px;
-    bottom: 3px;
-    position: relative;
-}
+/*.main-nav span.badge {*/
+    /*left: 5px;*/
+    /*top: 3px;*/
+    /*margin-bottom: 4px;*/
+    /*bottom: 3px;*/
+    /*position: relative;*/
+/*}*/
 
 
 
@@ -50,7 +50,7 @@
 span.open-menu {
     position: fixed;
     left: 10px;
-    top: 0px;
+    top: 5px;
     color: white;
     font-size: 28px;
 }

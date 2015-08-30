@@ -4,8 +4,9 @@ define 'jquery', ->
 define 'knockout', ->
   return ko
 
-require ['lib/coffeescript'], (CoffeeScript) ->
+require ['lib/coffeescript','lib/when'], (CoffeeScript, When) ->
     window.CoffeeScript = CoffeeScript
+    window.When = When
     return
 
 define (require) ->
@@ -13,7 +14,7 @@ define (require) ->
   setup = (done) ->
 
     require ['lib/itchcork/itchcork'], ->
-      require ["lib/sinon","lib/hammer","lib/jquery.scrollTo","lib/jquery.localScroll","lib/customBindings", 'lib/testRunner/mochaRunner'], () ->
+      require ["lib/sinon","lib/hammer","lib/customBindings", 'lib/testRunner/mochaRunner'], () ->
 
       return
     return

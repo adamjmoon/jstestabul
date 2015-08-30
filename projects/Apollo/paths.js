@@ -9,9 +9,10 @@ define(function() {
       transitions: "" + options.ref + "lib/durandal/transitions",
       lib: "" + options.ref + "lib",
       specs: "" + options.ref + "specs",
-      app: "" + options.ref + "app"
+      'app/views': "" + options.ref + "app/views"
     };
-    this.bootstrap = [];
+    this.bootstrap = ['lib/angular/lib'];
+    this.testFrameworkDependencies = ['lib/angular/angular-mocks', 'lib/angular/angular-scenario'];
   };
   return setup;
 });

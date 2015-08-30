@@ -13,12 +13,10 @@ define(['lib/testRunner/runner', 'app/paths'], function(runner, pathSetup) {
     pathConfig = new pathSetup({
       ref: ref
     });
-    if (!ItchCork.viewModel.processed) {
-      runner({
-        pathConfig: pathConfig,
-        withCoverage: withCoverage
-      });
-    }
+    runner({
+      pathConfig: pathConfig,
+      withCoverage: withCoverage
+    });
   };
   return viewModel;
 });

@@ -1,13 +1,23 @@
 define (require )->
-  processSrcModule = (moduleName, callback) ->
+  processSrcModule = (moduleName) ->
     ex = undefined
     try
-      if requirejs.defined ItchCork.options.sourceList[i]
-        requirejs.undef ItchCork.options.sourceList[i]
-      require [moduleName], (module) ->
-        new ItchCork.Suite(moduleName, module)
-        callback()
-        return
+      moduleInfo =
+         name: moduleName
+         type: 'code'
+         ext : '.js'
+
+      $.get("/absolute"
+       , moduleInfo
+      ).done((data) ->
+        new ItchCork.Suite(moduleName, data)
+      )
+#      if requirejs.defined moduleName
+#        requirejs.undef moduleName
+#      require [moduleName], (module) ->
+#        new ItchCork.Suite(moduleName, module)
+
+#       return
 
     catch _error
       ex = _error
@@ -37,11 +47,9 @@ define (require )->
       processSrcModule ItchCork.options.sourceList[i]
 
 
-      require([ItchCork.options.sourceList[i]], (module)->
-        if i is ItchCork.options.sourceList.length
-          done() if done
-        return
-      )
+      if i is ItchCork.options.sourceList.length
+        done() if done
+
       i++
 
     return

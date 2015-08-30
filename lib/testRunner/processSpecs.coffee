@@ -2,10 +2,21 @@ define (require )->
   processSpecModule = (moduleName, require) ->
     ex = undefined
     try
-      ItchCork.codeProcessor.process new ItchCork.SpecModel(moduleName), "", (specModel) ->
-        ItchCork.viewModel.specs.push specModel
-        ItchCork.viewModel.selectedSpecModel specModel  if typeof ItchCork.viewModel.selectedSpecModel isnt "undefined"
-        return
+      moduleInfo =
+          name: moduleName
+          type: 'code'
+          ext : '.js'
+
+      $.get("/absolute"
+      , moduleInfo
+      ).done((data) ->
+       ItchCork.codeProcessor.process new ItchCork.SpecModel(moduleName), "", (specModel) ->
+
+          ItchCork.viewModel.specs.push specModel
+          ItchCork.viewModel.selectedSpecModel specModel  if typeof ItchCork.viewModel.selectedSpecModel isnt "undefined"
+          return
+      )
+
 
     catch _error
       ex = _error

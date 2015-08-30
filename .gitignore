@@ -10,3 +10,4 @@ results/*
 /*/Gruntfile.js
 /*/coverage.json
 /app/*.js
+/config.json

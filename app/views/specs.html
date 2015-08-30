@@ -31,12 +31,10 @@
 
     <div id="suite-selected" class="col-md-9 well suite-selected">
         <div class="col-md-push-3" style="position: fixed; top: 0px;">
-            <input type="text" class="typeahead moduleName brandit"
-                   data-bind="value: m.selectedSpecModel().moduleName,attr: {'size': m.selectedSpecModel().moduleName().length}">
+            <input type="text" class="moduleName brandit typeahead selectedModule"
+                   data-bind="value: m.selectedSpecModel().moduleName,attr: {'size': m.selectedSpecModel().moduleName().length + 1}">
 
             <div id="bloodhoundSpecs" data-bind="typeahead: {list: ItchCork.options.specs}">
-
-
                 <input class="typeahead col-md-12" type="text" placeholder="Search for module ...">
             </div>
         </div>

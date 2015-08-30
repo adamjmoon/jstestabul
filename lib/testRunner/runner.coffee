@@ -6,7 +6,7 @@ define (require) ->
     postResults = undefined
     unless options.withCoverage
       requirejs.config
-        baseUrl: "_src"
+        baseUrl: "absolute"
         paths: options.pathConfig.paths
 
     else
@@ -40,8 +40,8 @@ define (require) ->
       "lib/testRunner/processSpecs"
 
     ], (ProcessSource,ProcessSpecs) ->
-      
 
+      options.pathConfig.mock() if options.pathConfig.mock
       require options.pathConfig.bootstrap, ->
 
         unless ItchCork.viewModel.processed
@@ -69,10 +69,7 @@ define (require) ->
                   ItchCork.viewModel.processed = true
                   return
                 return
-
-              mochaRunner ItchCork.options.specs, require, ItchCork, mochaDone
-            return
-
+            mochaRunner ItchCork.options.specs, require, ItchCork, mochaDone
           )
         return
 
