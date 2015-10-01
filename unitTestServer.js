@@ -4,11 +4,15 @@ var express = require('express')
     , path = require('path')
     , growl = require('growl')
     , config = require('./config.json')
+    , rewrite = require("express-urlrewrite")
 
 var app = module.exports = express();
 
+
+
 app.configure('development', function () {
     app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+    app.use(rewrite(/^\/absolute\/(.*)/, '/absoluteModule?module=$1'));
 });
 
 app.use(express.errorHandler());
@@ -53,7 +57,7 @@ app.get('/specs', function (req, res) {
     walkDir(path, function (err, specList) {
         if (err) throw err;
         specList = specList.sort();
-        var options = { specs: specList, framework: config.framework}
+        var options = { specs: specList, framework: config.framework, specsFileExt: config.specsFileExt}
 
         res.send(options);
     }, true);
@@ -99,27 +103,29 @@ app.post('/coverage', function (req, res) {
     });
 });
 
-app.get('/absolute', function (req, res) {
+//app.get('/absolute', function (req, res) {
+//
+//    console.log(req.route);
+//    console.log(req.url);
+//    var moduleInfo = req.query;
+//
+//    var modulePath = config.jsRootPath + moduleInfo.name + moduleInfo.ext;
+//    console.log(modulePath);
+//    fs.readFile(modulePath,{}, function (err, data) {
+//        if (err) {
+//            console.log(err);
+//        } else {
+//            var src = data.toString();
+//            res.end(src);
+//        }
+//    });
+//});
 
-    console.log(req.query);
-    var moduleInfo = req.query;
-    var modulePath = config.jsRootPath + moduleInfo.name + moduleInfo.ext;
-    console.log(modulePath);
-    fs.readFile(modulePath,{}, function (err, data) {
-        if (err) {
-            console.log(err);
-        } else {
-            var src = data.toString();
-            res.end(src);
-        }
-    });
-});
+app.get('/absoluteModule', function (req, res) {
 
-app.get('/absoluteJS', function (req, res) {
-    console.log(req);
-    var moduleInfo = req.query;
-    var modulePath = config.jsRootPath + moduleInfo.name + ".js";
-
+    var module = req.query.module;
+    var modulePath = config.jsRootPath + module;
+    modulePath = modulePath.split("?")[0];
     fs.readFile(modulePath,{}, function (err, data) {
         if (err) {
             console.log(err);
@@ -212,8 +218,8 @@ function walkDir(dir, done, specs) {
                         }, specsOnly);
                     } else {
                         if (specsOnly) {
-                            if (file.indexOf(config.specsExt + '.js') > -1) {
-                                results.push(file.replace(originalDir, 'specs'));
+                            if (file.indexOf(config.specsFileNameEnding) > -1 && file.indexOf(config.specsFileExt) > -1) {
+                                results.push(file.replace(originalDir, 'specs').replace(config.specsFileExt,''));
                             }
                         } else {
                             if (file.indexOf('.js') > -1 && file.indexOf('/vendor/') === -1) {

@@ -12,8 +12,6 @@ requirejs.config
     benchmark: "lib/benchmark"
     ace: "../lib/ace"
 
-  urlArgs: "bust=" + (new Date()).getTime()
-
 require ["lib/testRunner/runnerSetup","app/start"], (setup, start) ->
 
   setup()

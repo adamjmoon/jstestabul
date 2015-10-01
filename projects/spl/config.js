@@ -15,7 +15,9 @@ config.specsPath = config.jsRootPath + "specs/";
 
 config.coverage = ["_src/common/**/*.js", "_src/OTCore/**/*.js"];
 
-config.specsExt = "_spec";
+config.specsFileNameEnding = "_spec";
+
+config.specsFileExt = ".coffee";
 
 config.framework = "mocha";
 

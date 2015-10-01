@@ -7,17 +7,12 @@ define (require )->
          type: 'code'
          ext : '.js'
 
-      $.get("/absolute"
-       , moduleInfo
-      ).done((data) ->
-        new ItchCork.Suite(moduleName, data)
-      )
-#      if requirejs.defined moduleName
-#        requirejs.undef moduleName
-#      require [moduleName], (module) ->
-#        new ItchCork.Suite(moduleName, module)
 
-#       return
+      if requirejs.defined moduleName
+        requirejs.undef moduleName
+      require [moduleName], (module) ->
+        new ItchCork.Suite(moduleName, module)
+        return
 
     catch _error
       ex = _error

@@ -27,10 +27,13 @@ require ['lib/coffeescript','lib/amplify','lib/ace/ace','lib/js2coffee/narcissus
 
         if !ItchCork.viewModel.processed
           $.get "/specs", (options) ->
+            debugger;
             ItchCork.options.framework = options.framework
             ItchCork.options.specs = options.specs
+            ItchCork.options.specsFileExt = options.specsFileExt
 
             $.get "/sourceList", (options) ->
+              debugger;
               ItchCork.options.sourceList = options.sourceList
               ItchCork.options.sourceExt = options.sourceExt
               require [

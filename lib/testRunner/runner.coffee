@@ -40,7 +40,7 @@ define (require) ->
       "lib/testRunner/processSpecs"
 
     ], (ProcessSource,ProcessSpecs) ->
-
+      debugger;
       options.pathConfig.mock() if options.pathConfig.mock
       require options.pathConfig.bootstrap, ->
 

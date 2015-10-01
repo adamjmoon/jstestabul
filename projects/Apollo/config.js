@@ -13,7 +13,7 @@ config.jsUnderTestInclude = ['**', '!specs/*', '!**/*.less'];
 
 config.specsPath = "../Apollo/Client/test/unit";
 
-config.specsExt = ".spec";
+config.specsFileNameEnding = ".spec";
 
 config.coverage = ["_src/**/*.js"];
 

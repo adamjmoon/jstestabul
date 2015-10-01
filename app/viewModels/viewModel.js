@@ -2,6 +2,7 @@
 define(['lib/testRunner/runner', 'app/paths'], function(runner, pathSetup) {
   var viewModel;
   viewModel = function() {
+    debugger;
     this.m = ItchCork.viewModel;
   };
   viewModel.prototype.activate = function(withCoverage) {
@@ -13,6 +14,7 @@ define(['lib/testRunner/runner', 'app/paths'], function(runner, pathSetup) {
     pathConfig = new pathSetup({
       ref: ref
     });
+    debugger;
     runner({
       pathConfig: pathConfig,
       withCoverage: withCoverage

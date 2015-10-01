@@ -1,5 +1,6 @@
 define ['lib/testRunner/runner','app/paths'],(runner, pathSetup) ->
   viewModel = ->
+    debugger;
     @m = ItchCork.viewModel
     return
 
@@ -10,7 +11,7 @@ define ['lib/testRunner/runner','app/paths'],(runner, pathSetup) ->
 
     pathConfig = new pathSetup
       ref : ref
-
+    debugger;
     runner
       pathConfig: pathConfig
       withCoverage: withCoverage
